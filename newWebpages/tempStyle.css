@@ -197,7 +197,6 @@
     -moz-transform:rotate(45deg);
     -o-transform:rotate(45deg);
     transform:rotate(45deg);
-	
 }
 .textDemo{
 	right:0px;
@@ -413,9 +412,24 @@
     position:absolute;
 }
 
+#direction {
+	top:125px;
+	margin-left: 70px;
+	box-shadow:0px 0px 0px;
+}
+
+#colorPlate{
+	top:125px;
+	margin-left: 70px;
+	box-shadow:0px 0px 0px;
+}
+#videoRecord{
+	top:125px;
+	margin-left: 70px;
+	box-shadow:0px 0px 0px;
+}
 #envirDivPlate{
 	margin-top:33px;
-	margin-left:2px;
 	box-shadow:0px 0px 0px;
 	border-radius:0px;
 	border-left:0px solid #000;

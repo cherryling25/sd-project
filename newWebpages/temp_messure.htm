@@ -1483,7 +1483,7 @@
 		<div class="iconCell iconCell11Left">
 			<img id="imgVideoRecord" src="./images/video.png" tppabs="http://192.168.100.2:8080/images/video.png" ondragstart="return false" onclick="showPlate('videoRecord')" onmouseover="showFocus(this,'video')" onmouseout="showBlur(this,'video')"/>
 			<div id="videoRecord" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
-				<div class="arrowDemo show"></div><script>document.write(_record);</script>:
+				<div class=" show"></div><script>document.write(_record);</script>:
 				<select id="videoRecordSelect" class="show" style="width:70px;color:#666;right:5px;top:12px;position:absolute;" name="videoRecord" onchange="showValue('videoRecord',this.value)">
 					<option class="show" value="0"><script>document.write(_infrared);</script></option>
 					<option class="show" value="1"><script>document.write(_infrared);</script>+<script>document.write(_visible);</script></option>
@@ -1495,7 +1495,7 @@
         <div class="iconCell iconCell3Left">
              <img id="imgDirection" src="./images/imageDistance.png" tppabs="http://192.168.100.2:8080/images/imageDistance.png" ondragstart="return false" onclick="showPlate('direction')" onmouseover="showFocus(this,'imageDistance')" onmouseout="showBlur(this,'imageDistance')"/>
              <div id="direction" class="downDemo show" style="left:-20px;height:60px;padding:10px 0px 0px 10px;width:120px;">
-                <div class="arrowDemo show"></div>
+                <div class="show"></div>
                 <input class="show" id="horizontal" type="checkbox" value="0" onclick="showValue('direction',this.value)" /><label class="show" for="horizontal">&nbsp;&nbsp;<script>document.write(_horizontal);</script></label><br/>
                 <input class="show" id="vertical" type="checkbox" value="0" onclick="showValue('direction',this.value)" /><label class="show" for="vertical">&nbsp;&nbsp;<script>document.write(_vertical);</script></label>
             </div>
@@ -1503,7 +1503,7 @@
         <div class="iconCell iconCell4Left Slide">
             <img id="colorPlateDiv" class="iconImg Slide" ondragstart="return false" src="./images/colorPlate.png" tppabs="http://192.168.100.2:8080/images/colorPlate.png" onclick="showPlate('colorPlate')" onmouseover="showFocus(this,'colorPlate')" onmouseout="showBlur(this,'colorPlate')"/><br/>
             <div id="colorPlate" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
-                <div class="arrowDemo show"></div><script>document.write(_color_plate);</script>:
+                <div class=" show"></div><script>document.write(_color_plate);</script>:
                 <select id="colorSelect" class="show" style="width:80px;color:#666;right:15px;top:12px;position:absolute;" name="colorPlate" onchange="showValue('colorPlate',this.value)">
                     <option class="show" value="0"><script>document.write(_white);</script></option>
                     <option class="show" value="1"><script>document.write(_black);</script></option>
@@ -1568,24 +1568,24 @@
 					<div class="envirButton show" id="envirButtonPlate" onclick="showValue('envirDivPlate',0)"><font class="envirFont show"><script>document.write(_submit);</script></font></div>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_reflectivity);</script><input class="envirRight show" id="envirReflectPlate" type="text" />
+					<script>document.write(_reflectivity);</script><input class="envirRight show" id="envirReflectPlate" type="number" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_airTemp);</script><input class="envirRight show" id="envirAirTemPlate" type="text" />
+					<script>document.write(_airTemp);</script><input class="envirRight show" id="envirAirTemPlate" type="number" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_targetTemp);</script><input class="envirRight show" id="envirTargetTempPlate" type="text" />
+					<script>document.write(_targetTemp);</script><input class="envirRight show" id="envirTargetTempPlate" type="number" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_atmosTrans);</script><input class="envirRight show" id="envirAtmosTransPlate" type="text" />
+					<script>document.write(_atmosTrans);</script><input class="envirRight show" id="envirAtmosTransPlate" type="number" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_distance);</script><input class="envirRight show" id="envirDisPlate" type="text" />
+					<script>document.write(_distance);</script><input class="envirRight show" id="envirDisPlate" type="number" />
 				</div>
 				<div class='envirSubDiv show'>
 					<div class="envirDiv envirExternal show"><script>document.write(_infraredWindow);</script></div>
 					<div class="envirDiv envirExternal show">
-						<script>document.write(_infraredTemp);</script><input class="envirSubright show" id="envirInfTemPlate" type="text" />
+						<script>document.write(_infraredTemp);</script><input class="envirSubright show" id="envirInfTemPlate" type="number" />
 					</div>
 					<!-- >
 					<div class="envirDiv envirExternal show">

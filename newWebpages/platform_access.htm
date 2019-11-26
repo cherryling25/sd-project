@@ -1,0 +1,302 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="tempStyle.css">
+<title>IRay</title>
+
+<script src="get_param.cgi"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script type="text/javascript" src="checkout.js"></script>
+<script>
+
+</script>
+</head>
+<body onload="body_onload()">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="http://www.infiray.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/Infiray.png" alt=""></div>
+                </div>
+                 <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li_z" style="left:54%;">
+							<div class="listCell" style="top:23px;">
+								<a href="temp_messure.htm"><script>document.write(_thermometric);</script></a>
+							</div>
+                        </li>
+                        <li class="head_nav_list_li_z" style="left:60%;">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <div class="listCell" style="top:23px;">
+                            	 <a href="temp_storage.htm"><script>document.write(_storage);</script></a>
+                            </div>
+                        </li>
+                        <li class="head_nav_list_li_z active" style="left:66%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="setupList()"><script>document.write(_settings);</script></a>
+                        	</div>
+                        </li>
+                        <li id="setupList" class="head_nav_list_li_z show" style="left:66%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" >
+                                    <a class="show" href="ip.htm">
+                                        <script>document.write(_Network);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show">
+                                    <a class="show" href="log.htm">
+                                        <script>document.write(_log);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" >
+                                    <a class="show" href="upgrade.htm">
+                                        <script>document.write(_maintenance);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell4Top show" >
+                                    <a class="show" href="user.htm">
+                                        <script>document.write(_user);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell5Top show" >
+                                    <a class="show" href="platform_access.htm">
+                                        <script>document.write(_platform);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell6Top show">
+                                    <a class="show" href="status.htm">
+                                        <script>document.write(_device);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- >
+                        <li class="head_nav_list_li_z" style="left:72%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="languageList()"><script>document.write(_language);</script></a>
+                        	</div>
+                        </li>
+                        <li id="languageList" class="head_nav_list_li_z show" style="left:72%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        < -->
+                        <div class="header_tips" style="right:60px;">
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" style="top:13px;" src="./images/loginuser1.png" ondragstart="return false" ></img>
+                        	</div>
+                        	<div class="relaCell" style="width:100px;top:10px;cursor:default;" id="loginName">
+                        		<script>document.write('');</script>
+                        	</div>
+							<div id="logoutDiv" class="relaCell" style="width:60px;color:#666;top:10px;" onclick="logout()" onmouseover="foucus_header_tips('logoutDiv')" onmouseout="defoucus_header_tips('logoutDiv','#666')">
+								<script>document.write(_logout);</script>
+							</div>
+                        	
+                        </div>
+                        <div class="header_tips" style="right:60px;top:38px;" >
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" src="./images/language1.png" ondragstart="return false"></img>
+                        	</div>
+							<div id="languageshow" class="relaCell" style="top:0px;" onclick="languageList()" onmouseover="foucus_header_tips('languageshow')" onmouseout="defoucus_header_tips('languageshow')">
+                        		<script>document.write(_language);</script>
+                        	</div>
+                        </div>
+                        <li id="languageList" class="head_nav_list_li_z show" style="right:200px;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show px10_font" style="text-align:left;" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='center-in-center' style="width:640px;">
+	
+	<!-- > auto timing< -->
+	<div id="autoTimingDiv" class='parentDiv' style="height:210px;top:0px;z-index:1;">
+		<div class='topBotBor'><strong><script>document.write(_auto_timing);</script><img id="autoTiming_setting" class="upDowmImg" name='down' src='./images/up.jpg' onclick="upDown(this.id)"/></div>
+		<div id="autoTiming_show" style="display:inline;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_auto_timing);</script><input  type="checkbox" id="autoTiming" class="checkCell")/></div>
+			<div class="childDiv cell1Buck ipCellLeft"><script>document.write(_ntp_address);</script><input  type="text" value="" id="ntpAddress" class="childValue" maxlength="32" onKeyUp="value=value.replace(/[^a-zA-Z0-9.\-_]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(_device_time);</script>
+					<div id="deviceTimingDiv0" class="manualTimeingDiv" >
+						<input id="devicelYear0" readonly="readonly" type="text" class="manualTimeingInput" style="left:5px;"/>
+						<font id="deviceYearName0" class="manualTimeingFont" style="left:45px;">-</font>
+						<input id="deviceMonth0" readonly="readonly" type="text" class="manualTimeingInput" style="left:55px;width:25px;"/>
+						<font id="deviceMonthName0" class="manualTimeingFont" style="left:80px;">-</font>
+						<input id="deviceDay0" readonly="readonly" type="text" class="manualTimeingInput" style="left:90px;width:25px;"/>
+					</div>
+					<div id="deviceTimingDiv1" class="manualTimeingDiv" style="left:343px;width:105px;">
+						<input id="deviceHour0" readonly="readonly" type="text" class="manualTimeingInput" style="left:5px;width:25px;"/>
+						<font id="deviceHourName0" class="manualTimeingFont" style="left:30px;">:</font>
+						<input id="deviceMinute0" readonly="readonly" type="text" class="manualTimeingInput" style="left:40px;width:25px;"/>
+						<font id="deviceMinuteName0" class="manualTimeingFont" style="left:65px;">:</font>
+						<input id="deviceSecond0" readonly="readonly" type="text" class="manualTimeingInput" style="left:75px;width:25px;"/>
+					</div>
+				</div>
+			<div class="childDiv cell3Buck ipCellLeft" align="center">
+				<button id="autoTimeSubmit" class="childBut" onclick="submitInfo(this.id)"><script>document.write(_submit);</script></button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- >manual timing< -->
+	<div id="manualTimingDiv" class='parentDiv' style="height:210px;top:210px;z-index:2;">
+		<div class='topBotBor'><strong><script>document.write(_manual_timing);</script><img id="manualTiming_setting" class="upDowmImg" name='up' src='./images/down.jpg' onclick="upDown(this.id)"/></div>
+		<div id="manualTiming_show" style="display:none;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_manual_timing);</script><input  type="checkbox" id="manualTiming" class="checkCell")/></div>
+			<div class="childDiv cell1Buck ipCellLeft"><script>document.write(_local_time);</script>
+				<div id="manualTimingDiv0" class="manualTimeingDiv" >
+					<input id="manualYear" readonly="readonly" type="text" class="manualTimeingInput" style="left:5px;"/>
+					<font id="manualYearName" class="manualTimeingFont" style="left:45px;">-</font>
+					<input id="manualMonth" readonly="readonly" type="text" class="manualTimeingInput" style="left:55px;width:25px;"/>
+					<font id="manualMonthName" class="manualTimeingFont" style="left:80px;">-</font>
+					<input id="manualDay" readonly="readonly" type="text" class="manualTimeingInput" style="left:90px;width:25px;"/>
+				</div>
+				<div id="manualTimingDiv1" class="manualTimeingDiv" style="left:343px;width:105px;">
+					<input id="manualHour" readonly="readonly" type="text" class="manualTimeingInput" style="left:5px;width:25px;"/>
+					<font id="manualHourName" class="manualTimeingFont" style="left:30px;">:</font>
+					<input id="manualMinute" readonly="readonly" type="text" class="manualTimeingInput" style="left:40px;width:25px;"/>
+					<font id="manualMinuteName" class="manualTimeingFont" style="left:65px;">:</font>
+					<input id="manualSecond" readonly="readonly" type="text" class="manualTimeingInput" style="left:75px;width:25px;"/>
+				</div>
+			</div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(_device_time);</script>
+				<div id="deviceTimingDiv3" class="manualTimeingDiv" >
+					<input id="devicelYear1" readonly="readonly" type="text" class="manualTimeingInput" style="left:5px;"/>
+					<font id="deviceYearName1" class="manualTimeingFont" style="left:45px;">-</font>
+					<input id="deviceMonth1" readonly="readonly" type="text" class="manualTimeingInput" style="left:55px;width:25px;"/>
+					<font id="deviceMonthName1" class="manualTimeingFont" style="left:80px;">-</font>
+					<input id="deviceDay1" readonly="readonly" type="text" class="manualTimeingInput" style="left:90px;width:25px;"/>
+				</div>
+				<div id="deviceTimingDiv4" class="manualTimeingDiv" style="left:343px;width:105px;">
+					<input id="deviceHour1" readonly="readonly" type="text" class="manualTimeingInput" style="left:5px;width:25px;"/>
+					<font id="deviceHourName1" class="manualTimeingFont" style="left:30px;">:</font>
+					<input id="deviceMinute1" readonly="readonly" type="text" class="manualTimeingInput" style="left:40px;width:25px;"/>
+					<font id="deviceMinuteName1" class="manualTimeingFont" style="left:65px;">:</font>
+					<input id="deviceSecond1" readonly="readonly" type="text" class="manualTimeingInput" style="left:75px;width:25px;"/>
+				</div>
+			</div>
+			<div class="childDiv cell3Buck ipCellLeft" align="center">
+				<button id="manualTimeSubmit" class="childBut" onclick="submitInfo(this.id)"><script>document.write(_submit);</script></button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- >dev info 高度130< -->
+	<div id="deviceDiv" class='parentDiv' style="height:130px;top:260px;z-index:3;">
+		<div class='topBotBor'><strong><script>document.write(_device_setting);</script><img id="device_setting" class="upDowmImg" name='up' src='./images/down.jpg' onclick="upDown(this.id)"/></div>
+		<div id="device" style="display:none;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_device_name);</script><input  type="text" value="" id="deviceName" class="childValue" maxlength="32" onKeyUp="value=value.replace(/[^a-zA-Z0-9\-_]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div class="childDiv cell1Buck ipCellLeft" align="center">
+				<button id="deviceSubmit" class="childBut" onclick="submitInfo(this.id)"><script>document.write(_submit);</script></button>
+			</div>
+		</div>
+	</div>
+	
+	<!--高度200 高度210-->
+	<div id="emailDiv" class='parentDiv' style="height:210px;top:310px;z-index:4;">
+		<div class='topBotBor'><strong><script>document.write(_email_setting);</script><img id="email_setting" class="upDowmImg" name='up' src='./images/down.jpg' onclick="upDown(this.id)"/></div>
+		<div id="email" style="display:none;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_authenticate_email);</script><input class="checkCell"  type="checkbox" id="authenticate" /></div>
+			<div class="childDiv cell1Buck ipCellLeft"><script>document.write(_recipient_address);</script><input  type="text" value="" id="recipient" class="childValue"/></div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(_sender_address);</script><input  type="text" value="" id="sender" class="childValue"/></div>
+			<!-- ><div class="childDiv cell3Buck ipCellLeft"><script>document.write(_user_email);</script><input  type="text" value="" id="user_email" class="childValue"/></div>< -->
+			<div class="childDiv cell3Buck ipCellLeft"><script>document.write(_pwd_email);</script><input type="password" value="" id="pwd_email" class="childValue" maxlength="16" onKeyUp="value=value.replace(/[^\w]/ig,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\w]/ig,''))"/></div>
+			<div class="childDiv cell4Buck ipCellLeft" align="center">
+				<button id="emailSubmit" class="childBut" onclick="submitInfo(this.id)"><script>document.write(_submit);</script></button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- > height:140< -->
+	<div id="ftpDiv" class='parentDiv' style="height:140px;top:360px;z-index:5;">
+		<div class='topBotBor'><strong><script>document.write(_FTP_setting);</script><img id="ftp_setting" class="upDowmImg" name='up' src='./images/down.jpg' onclick="upDown(this.id)"/></div>
+		<div id="ftp" style="display:none;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_address);</script><input  type="text" value="" id="address" class="childValue" maxlength="15" onKeyUp="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<!-- ><div class="childDiv cell1Buck ipCellLeft"><script>document.write(_document);</script><input  type="text" value="" id="document" class="childValue"/></div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(_ftp_port);</script><input  type="text" value="" id="ftp_port" class="childValue" /></div>< -->
+			<div class="childDiv cell1Buck ipCellLeft" align="center">
+				<button id="ftpSubmit" class="childBut" onclick="submitInfo(this.id)"><script>document.write(_submit);</script></button>
+			</div>
+		</div>
+	</div>
+	
+	<div id="platformDiv" class='parentDiv' style="height:280px;top:410px;z-index:6;">
+		<div class='topBotBor'><strong><script>document.write(_platform_access);</script><img id="platform_access" class="upDowmImg" name='up' src='./images/down.jpg' onclick="upDown(this.id)"/></div>
+		<div id="platform" style="display:none;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_local_port);</script><input readonly="readonly" type="text" value="" id="localport" class="childValue"/></div>
+			<div class="childDiv cell1Buck ipCellLeft"><script>document.write(_sip_id);</script><input readonly="readonly" type="text" value="" id="sip_id" class="childValue"/></div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(_sip_field);</script><input readonly="readonly" type="text" value="" id="sipserver_field" class="childValue"/></div>
+			<div class="childDiv cell3Buck ipCellLeft"><script>document.write(_sip_address);</script><input readonly="readonly" type="text" value="" id="sip_address" class="childValue"/></div>
+			<div class="childDiv cell4Buck ipCellLeft"><script>document.write(_sip_port);</script><input readonly="readonly" type="text" value="" id="sip_port" class="childValue"/></div>
+			<div class="childDiv cell5Buck ipCellLeft"><script>document.write(_sip_username);</script><input readonly="readonly" type="text" value="" id="sip_username" class="childValue"/></div>
+			<div class="childDiv cell6Buck ipCellLeft"><script>document.write(_reg_pwd);</script><input readonly="readonly" type="password" value="" id="reg_pwd" class="childValue" maxlength="16" onKeyUp="value=value.replace(/[^\w]/ig,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\w]/ig,''))"/></div>
+			<div class="childDiv cell7Buck ipCellLeft"><script>document.write(_keepalive_interval);</script><input readonly="readonly" type="text" value="" id="keepalive_interval" class="childValue"/></div>
+			<div class="childDiv cell8Buck ipCellLeft"><script>document.write(_heartbeat_fail);</script><input readonly="readonly" type="text" value="" id="heartbeat_fail" class="childValue"/></div>
+			<div class="childDiv cell9Buck ipCellLeft"><script>document.write(_register_period);</script><input readonly="readonly" type="text" value="" id="register_period" class="childValue"/></div>
+	
+			<div class="childDiv cell10Buck ipCellLeft" align="center">
+					<!-- >
+				<button class="childBut"><script>document.write(_submit);</script></button>			< -->
+			</div>
+
+		</div>
+	</div>
+	<!-- >
+	<div id="submitDiv" class="parentDiv" style="width:100%;height:200px;top:450px;z-index:5;" >
+
+		<button class="childBut leftBut" id="set" onclick="set_param()"> <script>document.write(_set);</script> </button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="childBut rightBut" id="reload" onClick="location.reload()"> <script>document.write(_refresh);</script> </button>
+
+	</div>
+	< -->
+</div>
+<div class="buttomTip" style="">
+	<div class="bottomFont" style=""><strong>IRay Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html>

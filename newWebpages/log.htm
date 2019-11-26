@@ -1,0 +1,232 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ShiDe</title>
+<script src="get_param.cgi" tppabs="http://192.168.100.2:8080/get_param.cgi"></script>
+
+<script type="text/javascript" src="jquery.min.js" tppabs="http://192.168.100.2:8080/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="public.js" tppabs="http://192.168.100.2:8080/public.js"></script>
+<link rel="stylesheet" href="app.css" tppabs="http://192.168.100.2:8080/app.css">
+<link rel="stylesheet" href="style.css" tppabs="http://192.168.100.2:8080/style.css" type="text/css">
+<link rel="stylesheet" href="tempStyle.css" tppabs="http://192.168.100.2:8080/tempStyle.css">
+<script>
+
+function clearLog()
+{
+	log.value="";
+}
+function send_command1(){
+	var url='cmd.cgi?cmd_tag=cmd_passthrough&cmd_string='+document.getElementById("command").value;
+	send_command(url);
+}
+function send_command(url){
+//	alert(url);
+	var xmlHttpReg = null;
+	if (window.ActiveXObject) {//如果是IE
+
+	  xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+
+	} else if (window.XMLHttpRequest) {
+
+	  xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+	}
+
+	//如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+	if (xmlHttpReg != null) {
+	  xmlHttpReg.open("get", url, true);
+	   xmlHttpReg.send(null);
+	  xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+
+	}
+
+	//回调函数
+	//一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+
+	//设定函数doResult()
+	function doResult() {
+
+	  if (xmlHttpReg.readyState == 4) {//4代表执行完成		 
+		  if (xmlHttpReg.status == 200) {//200代表执行成功
+			  //将xmlHttpReg.responseText的值赋给ID为resText的元素
+			  //$("#t2").attr("src",xmlHttpReg.responseText); 
+			  log.value+=xmlHttpReg.responseText;
+			  document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight; 
+		  }
+	  }
+
+	} 
+}
+function body_onload()
+{
+var url='cmd.cgi-cmd_tag=cmd_passthrough&cmd_string=dmesg'/*tpa=http://192.168.100.2:8080/cmd.cgi?cmd_tag=cmd_passthrough&cmd_string=dmesg*/;
+
+setCurrentUrl('..');
+showLoginName();
+send_command(url);
+$('#command').bind('keydown',function(event){  
+  if(event.keyCode == "13")      
+  {  
+    send_command1();  
+  }  
+});  
+document.getElementById('log').style.height = "701px";
+}
+</script>
+</head>
+<body onLoad="body_onload()">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="javascript:if(confirm(%27http://www.shidtech.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.infiray.com/%27" tppabs="http://www.infiray.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/shideit.png" tppabs="http://192.168.100.2:8080/images/shideit.png" alt=""></div>
+                </div>
+                 <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li_z" style="left:54%;">
+							<div class="listCell" style="top:23px;">
+								<a href="temp_messure.htm" tppabs="http://192.168.100.2:8080/temp_messure.htm"><script>document.write(_thermometric);</script></a>
+							</div>
+                        </li>
+                        <li class="head_nav_list_li_z" style="left:60%;">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <div class="listCell" style="top:23px;">
+                            	 <a href="temp_storage.htm" tppabs="http://192.168.100.2:8080/temp_storage.htm"><script>document.write(_storage);</script></a>
+                            </div>
+                        </li>
+                        <li class="head_nav_list_li_z active" style="left:66%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="setupList()"><script>document.write(_settings);</script></a>
+                        	</div>
+                        </li>
+                        <li id="setupList" class="head_nav_list_li_z show" style="left:66%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" >
+                                    <a class="show" href="ip.htm" tppabs="http://192.168.100.2:8080/ip.htm">
+                                        <script>document.write(_Network);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show">
+                                    <a class="show" href="log.htm" tppabs="http://192.168.100.2:8080/log.htm">
+                                        <script>document.write(_log);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" >
+                                    <a class="show" href="upgrade.htm" tppabs="http://192.168.100.2:8080/upgrade.htm">
+                                        <script>document.write(_maintenance);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell4Top show" >
+                                    <a class="show" href="user.htm" tppabs="http://192.168.100.2:8080/user.htm">
+                                        <script>document.write(_user);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell5Top show" >
+                                    <a class="show" href="platform_access.htm" tppabs="http://192.168.100.2:8080/platform_access.htm">
+                                        <script>document.write(_platform);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell6Top show">
+                                    <a class="show" href="status.htm" tppabs="http://192.168.100.2:8080/status.htm">
+                                        <script>document.write(_device);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                         <!-- >
+                        <li class="head_nav_list_li_z" style="left:72%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="languageList()"><script>document.write(_language);</script></a>
+                        	</div>
+                        </li>
+                        <li id="languageList" class="head_nav_list_li_z show" style="left:72%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        < -->
+                        <div class="header_tips" style="right:60px;">
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" style="top:13px;" src="./images/loginuser1.png" tppabs="http://192.168.100.2:8080/images/loginuser1.png" ondragstart="return false" ></img>
+                        	</div>
+                        	<div class="relaCell" style="width:100px;top:10px;cursor:default;" id="loginName">
+                        		<script>document.write('');</script>
+                        	</div>
+							<div id="logoutDiv" class="relaCell" style="width:60px;color:#666;top:10px;" onclick="logout()" onmouseover="foucus_header_tips('logoutDiv')" onmouseout="defoucus_header_tips('logoutDiv','#666')">
+								<script>document.write(_logout);</script>
+							</div>
+                        	
+                        </div>
+                        <div class="header_tips" style="right:60px;top:38px;" >
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" src="./images/language1.png" tppabs="http://192.168.100.2:8080/images/language1.png" ondragstart="return false"></img>
+                        	</div>
+							<div id="languageshow" class="relaCell" style="top:0px;" onclick="languageList()" onmouseover="foucus_header_tips('languageshow')" onmouseout="defoucus_header_tips('languageshow')">
+                        		<script>document.write(_language);</script>
+                        	</div>
+                        </div>
+                        <li id="languageList" class="head_nav_list_li_z show" style="right:200px;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show px10_font" style="text-align:left;" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='center-in-center' style="width:80%;top:80px;">
+	<div style="position:absolute;top:0px;height:30px;font-size:18px;left:50%;"><strong><script>document.write(_log);</script></strong></div>
+	<div style="width:100%;height:800px;position:absolute;top:30px;">
+		<textarea id="log" name="log" readonly style="width:100%;height:600px;"></textarea>
+	</div>
+	<div style="position:absolute;top:750px;left:50%;transform: translate(-50%);">
+		<input id="command" maxlength="64" value="dmesg">
+		<button id="send" onClick="send_command1()"> <script>document.write(_log_send);</script> </button>
+		<button id="set" onClick="clearLog()"> <script>document.write(_log_clr);</script> </button>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<button id="reload" onClick="location.reload()"> <script>document.write(_refresh);</script> </button>
+	</div>
+</div>
+<div class="buttomTip" style="">
+	<div class="bottomFont" style=""><strong>ShiDe Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html>
+<script>
+removeSelfClass();$("#dd-log", parent.document).addClass("selected");
+</script>
+<script type="text/javascript" src="rowscolor.js" tppabs="http://192.168.100.2:8080/rowscolor.js"></script>

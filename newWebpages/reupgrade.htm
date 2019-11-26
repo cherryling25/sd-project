@@ -1,0 +1,115 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" href="style.css" type="text/css">
+<script src="public.js"></script>
+<style>
+.back{
+	top:0px;
+	width:100%;
+	height:100%;
+	display:none;
+	z-index=2;
+	background-color:#ddd;
+	position:absolute;
+}
+</style>
+<script type="text/javascript">
+var total_seconds = 20;
+var current_secons = 0;
+
+window.onbeforeunload=function(e){     
+　　var e = window.event||e;  
+　　e.returnValue=("正在升级，确定离开当前页面吗？");
+}
+
+function timer()
+{
+	current_secons++;
+	progress_entry(calculate_persent(current_secons,total_seconds));
+	if (current_secons == total_seconds){
+		top.location='index.htm';
+		window.onbeforeunload = null;
+	}else
+		setTimeout('timer()',1000);	
+}
+
+function calculate_persent(index,total){
+	var num = Math.floor((index/total)*100);
+	var per = Math.floor(num/10)*10;
+	return per;
+}
+
+function progress_entry(per_current){
+	
+	if(typeof per_current != 'number' || per_current>100 || per_current<0){
+
+		return 0;
+	}
+	
+	for(var i=0; i<=10; i++){
+		var per = 10*i;
+		var id = 'progress_' + per;
+		var obj = document.getElementById(id);
+		
+		if(obj != null){
+			obj.style.display = 'none';
+		}
+	}
+
+	var curent_id = 'progress_' + per_current;
+	var curent_obj = document.getElementById(curent_id);
+	var show = document.getElementById("progress-show");
+	var cover = document.getElementById("cover_plate");
+	var frame = document.getElementById("progress_frame");
+
+	curent_obj.style.display = 'inline';
+	show.innerText = per_current + '%';
+	cover.style.backgroundColor = 'rgba(100,100,100,0.4)';
+	cover.style.display = 'inline';
+	frame.style.display = 'inline';
+}
+
+function body_onload()
+{
+	setTimeout('timer()',100);
+}
+</script>
+</head>
+<body onLoad="body_onload()">
+<div id="cover_plate" class="back" style="display:inline;">
+</div>
+<div id="progress_frame" class="frame center " style="display:inline;">
+	<div id="progress_title" class="title">
+    	<script>document.write(_reupgradeinfo);</script>
+    </div>
+    <div id="progress_0"  class="move  width_0" style=";">
+    </div>
+    <div id="progress_10"  class="move  width_10" style=";">
+    </div>
+    <div id="progress_20"  class="move  width_20" style=";">
+    </div>
+    <div id="progress_30"  class="move  width_30" style=";">
+    </div>
+    <div id="progress_40"  class="move  width_40" style=";">
+    </div>
+    <div id="progress_50"  class="move  width_50" style=";">
+    </div>
+    <div id="progress_60"  class="move  width_60" style=";">
+    </div>
+    <div id="progress_70"  class="move  width_70" style=";">
+    </div>
+    <div id="progress_80"  class="move  width_80" style=";">
+    </div>
+    <div id="progress_90"  class="move  width_90" style=";">
+    </div>
+    <div id="progress_100"  class="move  width_100" style=";">
+    </div>
+    <div id="container"  class="container  width_100" style=";">
+    </div>
+    <div id="progress-show"  class="progress-show  width_100" style=";">
+    </div>
+</div>					
+</body>
+</html>

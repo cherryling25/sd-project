@@ -1,0 +1,51 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" type="text/css">
+<title></title>
+
+<script src="get_param.cgi"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script>
+function set_platform()
+{	
+	var url;
+	url='set_param.cgi?&group_tag=guest_param';
+	url+='&set_cmd=post_url';
+	url+='&value='+$("#post_url").val();
+	url+='&' + new Date().getTime() + Math.random();
+        $.ajax({
+               url: url,
+               async: false,//改为同步方式
+               type: "GET",
+               data: {},
+               success: function (result) {}
+        });
+	$.getScript(url,function(){
+	});
+	location.reload();
+}
+function body_onload()
+{
+	$("#post_url").val(post_url0);
+}
+
+</script>
+</head>
+<body onLoad="body_onload()">
+<table id="setParamer" width="80%" src="about:blank"  align="left">
+	<tr height="25"><td class="v1 p2"><table width="100%" class="v2 f14 md1">
+	<tr height="25"><td colspan="2" class="h1 v2 md2 f16"><strong><script>document.write(_platform_access);</script></strong></td></tr>
+	<tr height="25"><td class="md4">&nbsp;&nbsp; post_url</td><td  class="md2" >&nbsp;&nbsp;<input id="post_url" size="100"></td></tr>
+	<tr height="25">
+	<td colspan="2" class="md3" align="center"><button id="set" onClick="set_platform()"> <script>document.write(_set);</script> </button>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<button id="reload" onClick="location.reload()"> <script>document.write(_refresh);</script> </button></td></tr></table></td></tr>
+</table>
+</body>
+</html>

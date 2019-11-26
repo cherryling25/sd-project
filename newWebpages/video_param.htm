@@ -1,0 +1,526 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<META http-equiv="X-UA-Compatible" content="IE=Edge; IE=8; IE=11">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="tempStyle.css">
+<title></title>
+<script src="get_param.cgi"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script src="appver.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<style type="text/css">
+</style>
+<script>
+var s_CurColor="";
+var vbright=128;
+var vcontrast=126;
+var vhue=126;
+var vsaturation=126;
+// 云台速度参数
+
+// 云台方向
+//var FWK_PROTOCOL_PTZ_CMD_STOP=0;
+var FWK_PROTOCOL_PTZ_CMD_UP=1;
+var FWK_PROTOCOL_PTZ_CMD_UP_STOP=0;
+var FWK_PROTOCOL_PTZ_CMD_DOWN=2;
+var FWK_PROTOCOL_PTZ_CMD_DOWN_STOP=0;
+var FWK_PROTOCOL_PTZ_CMD_LEFT=3;
+var FWK_PROTOCOL_PTZ_CMD_LEFT_STOP=0;
+var FWK_PROTOCOL_PTZ_CMD_RIGHT=6;
+var FWK_PROTOCOL_PTZ_CMD_RIGHT_STOP=0;
+var FWK_PROTOCOL_PTZ_CMD_LEFT_UP=4;
+var FWK_PROTOCOL_PTZ_CMD_RIGHT_UP=7;
+var FWK_PROTOCOL_PTZ_CMD_LEFT_DOWN=5;
+var FWK_PROTOCOL_PTZ_CMD_RIGHT_DOWN=8;
+var FWK_PROTOCOL_PTZ_CMD_STOP=0;
+var FWK_PROTOCOL_PTZ_CMD_CENTER=35;
+//上下/水平巡视
+var FWK_PROTOCOL_PTZ_CMD_VPATROL=26;
+var FWK_PROTOCOL_PTZ_CMD_VPATROL_STOP=27;
+var FWK_PROTOCOL_PTZ_CMD_HPATROL=28;
+var FWK_PROTOCOL_PTZ_CMD_HPATROL_STOP=29;
+
+var IO_ON=94;
+var IO_OFF=95;
+
+//云台控制---- ----------------------------------------------------------------------------------------------------
+function ptz_onmousedown(i)
+{
+	if(i == 0 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_UP);}
+	if(i == 1 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_LEFT_UP);}
+	if(i == 2 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_RIGHT_UP);}
+	if(i == 3 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_LEFT);}
+	if(i == 4 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_CENTER);}
+	if(i == 5 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_RIGHT);}
+	if(i == 6 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_LEFT_DOWN);}
+	if(i == 7 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_DOWN);}
+	if(i == 8 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_RIGHT_DOWN);}
+	//开关闭合
+	if(i == 13 ) {ptz_control(IO_OFF);}
+	if(i == 14 ) {ptz_control(IO_ON);}
+	//
+	if(i == 9 ) {
+	if(n_vpatrol[current] == 0){	n_vpatrol[current] = 1; ptz_control(FWK_PROTOCOL_PTZ_CMD_VPATROL);}
+	else{				n_vpatrol[current] = 0; ptz_control(FWK_PROTOCOL_PTZ_CMD_VPATROL_STOP);}
+	}
+	if(i == 11 ) {
+	if(n_hpatrol[current] == 0){	n_hpatrol[current] = 1;ptz_control(FWK_PROTOCOL_PTZ_CMD_HPATROL);}
+	else{				n_hpatrol[current] = 0; ptz_control(FWK_PROTOCOL_PTZ_CMD_HPATROL_STOP);}
+	}
+}
+//云台控制-----------------------------------------------------------------------------------------------------------
+function ptz_control(command)
+{
+	var url = 'set_param.cgi?&group_tag=monitor_param';
+	url+='&command='+command;
+	url+='&onestep=0';
+	url+='&' + new Date().getTime() + Math.random();
+	$.getScript(url);
+}
+function ptz_onmouseup(i)
+{
+	if(i == 0 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_UP_STOP);}
+	if(i == 1 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_STOP);}
+	if(i == 2 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_STOP);}
+	if(i == 3 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_LEFT_STOP);}
+	//if(i == 4 ) {ptz_control(FWK_PROTOCOL_PTZ_STOP);}
+	if(i == 5 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_RIGHT_STOP);}
+	if(i == 6 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_STOP);}
+	if(i == 7 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_DOWN_STOP);}
+	if(i == 8 ) {ptz_control(FWK_PROTOCOL_PTZ_CMD_STOP);}
+	//开关闭合
+	if(i == 13 ) {$("#switchoff").attr("src","images/switchoff_up.gif");}
+	if(i == 14 ) {$("#switchon").attr("src","images/switchon_up.gif");}
+}
+//paizhao
+function snapshotPic()
+{
+	$("#take_picture").attr("href","http://"+ip+":8080/photo.htm");
+}
+//预置位-----------------------------------------------------------------------------------------------------------
+function showppos(panel,btn)
+{
+	hidep();
+	var left = $("#"+btn).offset().left;//元素相当于窗口的左边的偏移量
+	var top = $("#"+btn).offset().top;//元素相对于窗口的上边的偏移量
+	$( "#"+panel ).css("left",left+5);
+	$( "#"+panel ).css("top",top+15);
+	$( "#"+panel ).show();
+}
+function hideppos(panel)
+{
+	$( "#"+panel ).hide();
+}
+function hidep(){
+	$( "#cp" ).hide();
+	$( "#sp" ).hide();
+	$( "#pt" ).hide();
+	$( "#ptColor").hide();
+	$( "#cv").hide();
+}
+function camera_control(param,value)
+{
+	try{
+		var url = 'set_param.cgi?&group_tag=set_value';
+		url+='&set_cmd='+param;
+		url+='&value='+value;
+		url+='&' + new Date().getTime() + Math.random();
+        $.ajax({
+               url: url,
+               async: false,//改为同步方式
+               type: "GET",
+               data: {},
+               success: function (result) {}
+        });
+	 //location.reload();
+	}catch(exception){
+	return;
+	}
+}
+function set_guest_param(param, value){
+	setcookie('param_cookie',0,10);
+	try{
+		var url = 'set_param.cgi?&group_tag=guest_param';
+		url+='&set_cmd='+param;
+		if(param == "MaxGain" || param == "ExposureTime"){
+		}else{
+			value = parseInt(value);
+		}
+		url+='&value='+value;
+		url+='&' + new Date().getTime() + Math.random();
+        $.ajax({
+               url: url,
+               async: false,//改为同步方式
+               type: "GET",
+               data: {},
+               success: function (result) {}
+        });
+	 //location.reload();
+	}catch(exception){
+	return;
+	}
+	url='get_param.cgi?next_url=bstr.htm';
+	url+='&group_tag=video_param';
+	url+='&' + new Date().getTime() + Math.random();
+	$.getScript(url,function(){
+	});
+	//location.reload();
+}
+function ShowptColor(btn,nCur,nDef)
+{
+	hidep();
+	for(var i=0;i<35;i++){
+		$("#ptColorSpan"+i).css("color","#17659e");
+		$("#ptColorSpan"+i).css("font-weight","normal");
+	}
+	$("#ptColorSpan"+nDef).css("color","red");
+	$("#ptColorSpan"+parseInt((nCur-64)/4)).css("color","yellow");
+	$("#ptColorSpan"+parseInt((nCur-64)/4)).css("font-weight","bold");
+
+	var left = $("#"+btn).offset().left;//元素相当于窗口的左边的偏移量
+	var top = $("#"+btn).offset().top;//元素相对于窗口的上边的偏移量
+	$("#ptColor").css("left",left+5);
+	$("#ptColor").css("top",top+25);
+	$("#ptColor").show();
+	s_CurColor=btn;
+}
+
+function setColor(nValue)
+{
+	if(s_CurColor=="clr_bright"){
+		camera_control("PlayBrightness",nValue*3);
+		vbright=64+nValue*4;
+	}
+	else if(s_CurColor=="clr_contast"){
+		camera_control("PlayContrast",nValue*3);
+		vcontrast=64+nValue*4;
+	}
+	else if(s_CurColor=="clr_saturation"){
+		camera_control("PlaySaturation",nValue*3);
+		vsaturation=64+nValue*4;
+	}
+	else if(s_CurColor=="clr_hue"){
+		camera_control("PlaySharpness",nValue*3);
+		vhue=64+nValue*4;
+	}
+	hidep();
+}
+//设置背景颜色
+
+function SetCpBackColor(obj, n)
+{
+	//鼠标在范围内时变色，否则无色
+	if(n == 0){
+		obj.bgColor = '';
+	}else{
+		obj.bgColor = '#ffff00';
+	}
+}
+function showhint(str){
+}
+function checkField(param,check){           //SET SWITCH
+	if(check == -1)
+		check = 0;
+	var status=0;
+	if(param=="MovingSensitivity" || param== "ODTLevel")
+		status=check;
+	else if(check)
+		status=1;
+	camera_control(param,status);
+}
+function take_picture_func(){
+	location.href='video_set_rect.html'; //页面跳转
+}
+function channel_cookie()
+{
+	var vchannel=$("#channel_set").val();
+	setcookie('vchannel',vchannel,10);
+	set_channel(vchannel);
+}
+function set_channel(channelp)
+{
+	if(channelp==1){
+		$("#fmt").val(fmt1);
+		$("#frame_rate").val(frame_rate1);
+		$("#level").val(level1);
+		$("#gop_size").val(gop_size1);
+		$("#profile").val(profile1);
+		$("#quality").val(quality1);
+		$("#qp_init").val(qp_init1);
+		$("#qpstep").val(qpstep1);
+		$("#qp_min").val(qp_min1);
+		$("#qp_max").val(qp_max1);
+		$("#rc_mode").val(rc_mode1);
+		$("#resolution").val(width1);
+		$("#bit_rate").val(bit_rate1);
+	}
+	else if(channelp==2){
+		$("#fmt").val(fmt2);
+		$("#frame_rate").val(frame_rate2);
+		$("#level").val(level2);
+		$("#gop_size").val(gop_size2);
+		$("#profile").val(profile2);
+		$("#quality").val(quality2);
+		$("#qp_init").val(qp_init2);
+		$("#qpstep").val(qpstep2);
+		$("#qp_min").val(qp_min2);
+		$("#qp_max").val(qp_max2);
+		$("#rc_mode").val(rc_mode2);
+		$("#resolution").val(width2);
+		$("#bit_rate").val(bit_rate2);
+	}
+	else {
+		$("#fmt").val(fmt0);
+		$("#frame_rate").val(frame_rate0);
+		$("#level").val(level0);
+		$("#gop_size").val(gop_size0);
+		$("#profile").val(profile0);
+		$("#quality").val(quality0);
+		$("#qp_init").val(qp_init0);
+		$("#qpstep").val(qpstep0);
+		$("#qp_min").val(qp_min0);
+		$("#qp_max").val(qp_max0);
+		$("#rc_mode").val(rc_mode0);
+		$("#resolution").val(width0);
+		$("#bit_rate").val(bit_rate0);
+	}
+}
+function set_bstr()
+{
+var url;
+var width=encodeURIComponent($("#resolution").val());
+var height;
+if(width==1920)
+	height=1080;
+else if(width== 1280)
+	height=720;
+else
+	height=480;
+setcookie('param_cookie',0,720);
+url='set_param.cgi?';
+url+='&group_tag=video_param';
+url+='&stream_chan='+encodeURIComponent($("#channel_set").val());
+url+='&fmt='+encodeURIComponent($("#fmt").val());
+url+='&frame_rate='+encodeURIComponent($("#frame_rate").val());
+url+='&level='+encodeURIComponent($("#level").val());
+url+='&gop_size='+encodeURIComponent($("#gop_size").val());
+url+='&profile='+encodeURIComponent($("#profile").val());
+url+='&quality='+encodeURIComponent($("#quality").val());
+url+='&qp_init='+encodeURIComponent($("#qp_init").val());
+url+='&qpstep='+encodeURIComponent($("#qpstep").val());
+url+='&qp_min='+encodeURIComponent($("#qp_min").val());
+url+='&qp_max='+encodeURIComponent($("#qp_max").val());
+url+='&rc_mode='+encodeURIComponent($("#rc_mode").val());
+url+='&width='+encodeURIComponent($("#resolution").val());
+url+='&height='+height;
+url+='&bit_rate='+encodeURIComponent($("#bit_rate").val());
+url+='&' + new Date().getTime() + Math.random();
+$.ajax({
+    url: url,
+    async: false,//改为同步方式
+    type: "GET",
+    data: {},
+    success: function (result) {
+        if(result.match('"result":false'))
+                alert(_sdcard_alarm);
+//        console.log("result = "+result);
+ }
+ });
+url='get_param.cgi?next_url=bstr.htm';
+url+='&group_tag=video_param';
+url+='&' + new Date().getTime() + Math.random();
+$.getScript(url,function(){
+	channel_cookie();
+});
+}
+function init_switch(){
+	document.getElementById("TDNR").checked=TDNR;//初始化check属性
+	document.getElementById("IDC").checked=IDC;
+	document.getElementById("WaterMark").checked=WaterMark;
+	document.getElementById("Moving").checked=Moving;
+	document.getElementById("MovingSensitivity").value=MovingSensitivity;
+	document.getElementById("ODT").checked=ODT;
+	document.getElementById("ODTLevel").value=ODTLevel;
+	document.getElementById("Sound").checked=Sound;
+//	console.log(network);
+//	console.log(network == "eth0");
+	if (network == "eth0")
+		document.getElementById("rtp_tcp").checked=false;
+	else
+		document.getElementById("rtp_tcp").checked=true;
+	document.getElementById("network_caching").value=500;
+	$("#ExposureTime").val(ExposureTime0);
+	$("#MaxGain").val(MaxGain0);
+	$("#NightEn").val(NightEn0);
+	$("#DaynightMode").val(DaynightMode0);
+}
+//vlc set tcp and network-caching
+function vlc_set(){
+	var network_cach,vlc,options;
+	network_cach=" network-caching="+$('#network_caching option:selected').val();
+	if(document.getElementById("rtp_tcp").checked){
+		options = new Array("rtsp-tcp=true",network_cach);
+	}else{
+		network_cach=":network-caching="+$('#network_caching option:selected').val();
+		options = new Array(network_cach);
+	}
+	vlc=document.getElementById("vlc");
+	//添加播放列表
+	if(vlc.VersionInfo){
+		vlc.playlist.stop();
+		vlc.playlist.clear();
+		vlc.playlist.add("rtsp://"+ip+"/webcam","Rockchip",options);
+		vlc.playlist.play();
+	}
+}
+function body_onload()
+{
+	if(0 == getcookie('param_cookie')){
+		setcookie("param_cookie",1,10);
+		window.location.reload(true);
+	}
+	init_switch();
+	vlc_set();
+	var vchannel = 2;//getcookie('vchannel');
+	$("#channel_set").val(vchannel);
+	set_channel(vchannel);
+
+}
+</script>
+</head>
+<body  onLoad="body_onload()">
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+        href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+
+<!-- 代码区 -->
+<script>
+    $(function () {
+        $html = '<div class="slippery_sanjiao c"></div>';
+        $('.slippery').append($html);
+        $('.head_fuhead_ul_span').click(function () {
+            $('html, body').animate({scrollTop: 0}, '500');
+        })
+    })
+</script>
+<div id="head" class="M c">
+    <div class="head_nav c">
+        <div class="head_nav_box c">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="http://www.baidu.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/Infiray.png" alt=""></div>
+                </div>
+                <div class="head_logo_con"><em>For Security</em></div>
+            </a>
+            <div class="head_nav_list">
+                <script>
+                    $(function () {
+                        $('.head_nav_list_li').hover(function () {
+                            $('.head_nav2',this).filter(':not(:animated)').slideDown();
+                            $('.head_nav2_bg22').slideDown();
+                        },function () {
+                            $('.head_nav2').slideUp();
+                        });
+                        $('.head_nav_list').hover(function () {
+
+                        },function () {
+                            $('.head_nav2_bg22').slideUp();
+                        });
+                    })
+                </script>
+                <div class="head_nav2_bg22 c" style="display: none;"></div>
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li">
+                            <a href="index.htm"><script>document.write(_thermometric);</script></a>
+                        </li>
+                        <li class="head_nav_list_li">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <a href="temp_storage.htm"><script>document.write(_storage);</script></a>
+                        </li>
+                        <li class="head_nav_list_li active">
+                            <a href=""><script>document.write(_settings);</script></a>
+                            <div class="head_nav2 c" style="display: none;">
+                                <div class="head_nav2_box c">
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="ip.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_Network);</script></div>
+                                        </a>
+                                    </div>
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="log.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_log);</script></div>
+                                        </a>
+                                    </div>
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="upgrade.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_maintenance);</script></div>
+                                        </a>
+                                    </div>
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="user.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_login);</script></div>
+                                        </a>
+                                    </div>
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="video_param.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_video);</script></div>
+                                        </a>
+                                    </div>
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="platform_access.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_platform);</script></div>
+                                        </a>
+                                    </div>
+                                    <div class="head_nav2_p">
+                                        <a class="c" href="status.htm">
+                                            <div class="head_nav2_p_con c"><script>document.write(_device);</script></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='center-in-center' style="width:768px;" align="center">
+	<table style="position:relative;top:10px;width:768px;height:576px;" style="display:inline" src="about:blank"  align="right">
+		<tr height="25"><td class="v1 p2"><table width="100%" class="v2 f14 md1">
+		<OBJECT classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921"
+		    codebase="http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab"
+		       width="100%" height="480px" style="DISPLAY:inline; OVERFLOW: scroll;" id="vlc" events="True">
+				<embed type="application/x-vlc-plugin"   pluginspage="htttp://www.videolan.org"
+				   width="640px"
+				   height="480px"
+				   name="vlc">
+				</embed>
+		 <param name="Src" value="" />
+		 <param name="ShowDisplay" value="True" />
+		 <param name="AutoLoop" value="False" />
+		 <param name="AutoPlay" value="True" />
+		 <param name="Controls" value="False">
+		 <font style="position:relative;" color=black><strong>Error:</strong> Videolan插件尚未安装，请访问 <a href="http://www.videolan.org"><font color=black>www.videolan.org</font></a> 下载。
+		 </font>
+		 </OBJECT> </table></td></tr>
+	 </table>
+</div>
+<div style="position:fixed;bottom:0px;width:100%;height:40px;background-color:#666;text-align:center;display:inline-block;">
+	<div style="left:40%;top:5px;font-size:18px;position:absolute;display:inline-block;color:#CCC;"><strong>InfiRay Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="rowscolor.js"></script>

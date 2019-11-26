@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ShiDe</title>
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="tempStyle.css">
+<link rel="stylesheet" href="loadStyle.css">
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.cookie.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script type="text/javascript" src="load.js"></script>
+</head>
+<body onLoad="body_onload()">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.www.shidtech.com/">< -->
+            <a href="http://www.shidtech.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/shideit.png" alt=""></div>
+                </div>
+                <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ><img style="width:100%;height:100%;" src="./images/desk.jpg" ondragstart="return false;" oncontextmenu="return false;"/>< -->
+<div class='center-in-center' style="">
+	<!-- ><div id="optionAccess" class="access" name="active" style="left:0px;background-color:#ccc;"><script>document.write(_operatorLogin);</script></div>
+	<div id="adminAccess" class="access" name="disabled" style="right:0px;background-color:#eee;"><script>document.write(_adminLogin);</script></div>< -->
+	<div class="loadbody divCenter" style="width:560px;">
+		<div id="nameRemind" class="remind" style="left:140px;top:40px;"><script>document.write(_nameRemind);</script></div>
+		<!-- ><div class='topBotBor' style="width:560px;"><strong><script>document.write(_loadTitle);</script></div>< -->
+		<div class="loadframe loadborder firstColumn" style="top:70px;">
+			<font class="loadframe" style="left:-90px;"><script>document.write(_loadName);</script></font><input id="loadName" class="loadframe borderNone" style="left:10px;width:230px;z-index:999;" maxlength="16" onKeyUp="value=value.replace(/[^a-zA-Z0-9\-_]/g,&#39;&#39;)" type="text" spellcheck="false"/>
+			<input id="loadNameHide" class="loadframe borderNone" style="left:150px;width:230px;display:none;" type="text" />
+		</div>
+		<div class="loadframe loadborder secondColoumn" style="top:130px;">
+			<font class="loadframe" style="left:-90px;"><script>document.write(_loadPsw);</script></font><input id="loadPwdHide" class="loadframe borderNone" style="left:60px;display:none;" type="password"/>
+			<input id="loadPwd" class="loadframe borderNone" style="left:10px;width:230px;z-index:999;" maxlength="16" type="password"/>
+		</div>
+		<div class="loadframe thirdColumn" style="width:100px;top:190px;left:70px;">
+			<input id="autoLoad" class="loadcheckbox vertMid" style="left:-15px;" type="checkbox" /><label class="loadlabel" style="width:150px;left:5px;" for="autoLoad"><script>document.write(_rememberPsw);</script></label>
+		</div>
+	</div>
+	<div id="loadSubmit" class="loadsubmit loadborder divCenter" style="background-color:#eee;top:310px;"><script>document.write(_login);</script></div>
+</div>
+<div class="buttomTip" style="">i
+	<div class="bottomFont" style=""><strong>ShiDe Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html>

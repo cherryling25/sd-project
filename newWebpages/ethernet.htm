@@ -1,0 +1,137 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" type="text/css">
+<title></title>
+<script src="set_param.cgi?group_tag=network_info&get_set_type=get&network_type=ETH"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script>
+function checkIP(value){
+//if (isNull(value)) return false;
+var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g //匹配IP地址的正则表达式
+if(re.test(value))
+{
+if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) return true;
+}
+return false;
+}
+
+function set_network()
+{
+var url;
+if($("#dhcp_enable").attr("checked")!="checked")
+{
+if(!checkIP($("#ip_inp").val())) {alert(_valid_ip); $("#ip_inp").focus();$("#ip_inp").select();return;}
+if(!checkIP($("#mask_inp").val())) {alert(_valid_ip1); $("#mask_inp").focus();$("#mask_inp").select();return;}
+if(!checkIP($("#gateway_inp").val())) {alert(_valid_ip2); $("#gateway_inp").focus();$("#gateway_inp").select();return;}
+if(!checkIP($("#dns_inp1").val())) {alert(_valid_ip3); $("#dns_inp1").focus();$("#dns_inp1").select();return;}
+if(!checkIP($("#dns_inp2").val())) {alert(_valid_ip4); $("#dns_inp2").focus();$("#dns_inp2").select();return;}
+}
+/*
+if($("#port_inp").val()=='')
+{
+	alert(_not_null);
+	$("#port_inp").focus();
+	return;
+}
+
+if(($("#port_inp").val()<1) || ($("#port_inp").val()>65535))
+{
+	alert(_port_range);
+	$("#port_inp").focus();
+	$("#port_inp").select();
+	return;
+}*/
+
+url='set_param.cgi?next_url=ethernet.htm&group_tag=network_info&get_set_type=set&network_type=ETH';
+url+='&STATIC_IP='+$("#ip_inp").val();
+url+='&NETMASK='+$("#mask_inp").val();
+url+='&GATEWAY='+$("#gateway_inp").val();
+url+='&DNS1='+$("#dns_inp1").val();
+url+='&DNS2='+$("#dns_inp2").val();
+url+=($("#dhcp_enable").attr("checked")=="checked")?'&DHCP_EN=1':'&DHCP_EN=0';
+//url+=(($("#port_inp").val()=='')||($("#port_inp").val()=='0'))?'&port=80':('&port='+$("#port_inp").val());
+//url+='&rtspenable=1';
+//url+=(($("#port_rtsp").val()=='')||($("#port_rtsp").val()=='0'))?'&rtspport=10554':('&rtspport='+($("#port_rtsp").val()));
+//url+='&onvifenable=1';
+//url+=(($("#port_onvif").val()=='')||($("#port_onvif").val()=='0'))?'&onvifport=10554':('&onvifport='+($("#port_onvif").val()));
+location=url;
+
+}
+
+
+function dhcp_enable_onclick()
+{
+($("#dhcp_enable").attr("checked")=="checked")?$("#tr_ip").hide():$("#tr_ip").show();
+($("#dhcp_enable").attr("checked")=="checked")?$("#tr_mask").hide():$("#tr_mask").show();
+($("#dhcp_enable").attr("checked")=="checked")?$("#tr_gateway").hide():$("#tr_gateway").show();
+($("#dhcp_enable").attr("checked")=="checked")?$("#tr_dns1").hide():$("#tr_dns1").show();
+($("#dhcp_enable").attr("checked")=="checked")?$("#tr_dns2").hide():$("#tr_dns2").show();
+
+}	
+function body_onload()
+{
+//dhcp
+$("#dhcp_enable").attr("checked",DHCP_EN?true:false);
+dhcp_enable_onclick();
+
+$("#ip_inp").val(STATIC_IP);
+$("#mask_inp").val(NETMASK);
+$("#gateway_inp").val(GATEWAY);
+$("#dns_inp1").val(DNS1);
+$("#dns_inp2").val(DNS2);
+}
+
+</script>
+</head>
+<body onload="body_onload()">
+<table width="640" height="480">
+  <tbody><tr height="25" class="altrow">
+    <td class="v1 p2">
+        <table width="100%" class="v2 f14 md1">
+          <tbody><tr height="25" class="">
+            <td colspan="2" class="h1 v2 md2 f16"><strong><script>document.write(_network_config);</script></strong></td>
+          </tr>
+          <tr height="25" class="">
+            <td width="40%" class="md4">&nbsp;&nbsp; <script>document.write(_dhcp_choice);</script></td>
+            <td class="md2">&nbsp;&nbsp;<input id="dhcp_enable" type="checkbox" onclick="dhcp_enable_onclick()" checked="checked"></td>
+          </tr>
+          <tr id="tr_ip" height="25" class="" style="display: table-row;">
+            <td class="md4">&nbsp;&nbsp; <script>document.write(_ip);</script></td>
+            <td class="md2">&nbsp;&nbsp;<input id="ip_inp" maxlength="15" onkeyup="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"></td>
+          </tr>
+          <tr id="tr_mask" height="25" class="" style="display: table-row;">
+            <td class="md4">&nbsp;&nbsp; <script>document.write(_mask);</script></td>
+            <td class="md2">&nbsp;&nbsp;<input id="mask_inp" maxlength="15" onkeyup="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"></td>
+          </tr>
+          <tr id="tr_gateway" height="25" class="" style="display: table-row;">
+            <td class="md4">&nbsp;&nbsp; <script>document.write(_gateway);</script></td>
+            <td class="md2">&nbsp;&nbsp;<input id="gateway_inp" maxlength="15" onkeyup="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"></td>
+          </tr>
+          <tr id="tr_dns1" height="25" style="display:table-row">
+            <td class="md4">&nbsp;&nbsp; <script>document.write(_dns1);</script></td>
+            <td class="md2">&nbsp;&nbsp;<input id="dns_inp1" maxlength="15" onkeyup="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"><span class="tipf">&nbsp;&nbsp;(<script>document.write(_default_s)</script>缺省值:8.8.8.8)</span></td>
+          </tr>
+          <tr id="tr_dns2" height="25" class="" style="display: table-row;">
+            <td class="md4">&nbsp;&nbsp; <script>document.write(_dns2);</script></td>
+            <td class="md2">&nbsp;&nbsp;<input id="dns_inp2" maxlength="15" onkeyup="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"><span class="tipf">&nbsp;&nbsp;(<script>document.write(_default_s)</script>缺省值:208.67.222.222)</span></td>
+          </tr>
+          <tr align="center" height="25" class="">
+            <td colspan="2" class="h2 md3"><button id="set" onclick="set_network()"> <script>document.write(_set);</script> </button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button id="reload" onclick="location.reload()"> <script>document.write(_refresh);</script> </button></td>
+         </tr>
+       </tbody></table>
+     </td>
+  </tr>
+</tbody></table>
+
+
+<script>
+removeSelfClass();$("#dd-ip", parent.document).addClass("selected");
+</script>
+<script type="text/javascript" src="rowscolor.js"></script>

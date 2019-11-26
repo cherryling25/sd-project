@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8>
+<META http-equiv="X-UA-Compatible" content="IE=Edge; IE=8; IE=11">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" type="text/css">
+<title></title>
+<script src="get_param.cgi"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script src="appver.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<style type="text/css">
+.box {
+	border: 2px double red; 
+    background: #FFFAFA;
+	outline:blue single 10px;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    opacity: 0.5;
+    cursor: move;
+}
+</style>
+<script type="text/javascript">
+// startX, startY 为鼠标点击时初始坐标
+// diffX, diffY 为鼠标初始坐标与 box 左上角坐标之差，用于拖动
+var startX, startY, diffX=0, diffY=0, ab, rect_w = 0, rect_h = 0, start_nx = 0 , start_ny = 0;
+// 是否拖动，初始为 false
+var dragging = false, box_exist = false;
+window.onload = function(e) {
+    e = e || window.event;
+    // 鼠标按下
+    document.onmousedown = function(e) {
+        startX = e.pageX;
+        startY = e.pageY;
+        if(startX>10 && startX<500 && startY<500 && startY>10){
+			// 如果鼠标在 box 上被按下
+			if(e.target.className.match(/box/)) {
+				// 允许拖动
+				dragging = true;
+				// 设置当前 box 的 id 为 moving_box
+				if(document.getElementById("moving_box") !== null) {
+					document.getElementById("moving_box").removeAttribute("id");
+				}
+				e.target.id = "moving_box";
+				// 计算坐标差值
+				diffX = startX - e.target.offsetLeft;
+				diffY = startY - e.target.offsetTop;
+			}
+			else if(!box_exist){
+				// 在页面创建 box
+				var active_box = document.createElement("div");
+				active_box.id = "active_box";
+				active_box.className = "box";
+				active_box.style.top = startY + 'px';
+				active_box.style.left = startX + 'px';
+				start_nx = startX;
+				start_ny = startY;
+				$("#start_node").val(startX+","+startY);
+				document.body.appendChild(active_box);
+				active_box = null;
+				box_exist = true;
+			}
+		};
+	};
+    // 鼠标移动
+    document.onmousemove = function(e) {
+		if(e.pageX>(10+diffX) && e.pageX<(500-rect_w+diffX) && e.pageY<(500-rect_h+diffY) && e.pageY>(10+diffY)){
+			// 更新 box 尺寸
+			if(document.getElementById("active_box") !== null) {
+				ab = document.getElementById("active_box");
+				ab.style.width = e.pageX - startX + 'px';
+				ab.style.height = e.pageY - startY + 'px';
+				$("#rect_width").val(e.pageX - startX);
+				$("#ret_heigh").val(e.pageY - startY);
+			}
+			// 移动，更新 box 坐标
+			if(document.getElementById("moving_box") !== null && dragging) {
+				var mb = document.getElementById("moving_box");
+				mb.style.top = e.pageY - diffY + 'px';
+				mb.style.left = e.pageX - diffX + 'px';
+				start_nx = e.pageX - diffX;
+				start_ny = e.pageY - diffY;
+				$("#start_node").val(start_nx+","+start_ny);
+			}
+		};
+    };
+          
+    // 鼠标抬起
+    document.onmouseup = function(e) {
+		if(e.pageX>(10+diffX) && e.pageX<(500-rect_w+diffX) && e.pageY<(500-rect_h+diffY) && e.pageY>(10+diffY)){
+			// 禁止拖动
+			console.log("mouseup");
+			dragging = false;
+			if(ab !== null) {
+				console.log("active_box exist");
+				// 如果长宽均小于 3px，移除 box
+/*				if(ab.offsetWidth < 1 || ab.offsetHeight < 1) {
+					console.log("rect_w < 1");
+					document.body.removeChild(ab);
+					rect_w = 0;
+					rect_h = 0;
+				}else{*/
+				rect_w= ab.style.width.match(/\d+/ig);
+				rect_h= ab.style.height.match(/\d+/ig);
+				$("#rect_width").val(rect_w);
+				$("#ret_heigh").val(rect_h);
+				//};
+				ab.removeAttribute("id");
+				box_exist = true;
+			};
+		};
+    };
+};
+
+function set_rect(){
+	var url;
+	if((rect_w <1) || (rect_h<1)){
+		alert("宽高不能为0。");
+	}
+	url='set_param.cgi?&group_tag=guest_param';
+	url+='&set_cmd=DrawArea';
+	url+='&value=0';
+	url+='&start_nx='+start_nx;
+	url+='&start_ny='+start_ny;
+	url+='&rect_w='+rect_w;
+	url+='&rect_h='+rect_h;
+	url+='&' + new Date().getTime() + Math.random();
+        $.ajax({
+               url: url,
+               async: false,//改为同步方式
+               type: "GET",
+               data: {},
+               success: function (result) {}
+        });
+	$.getScript(url,function(){
+	});
+	url='get_param.cgi?next_url=bstr.htm';
+	url+='&group_tag=video_param';
+	url+='&' + new Date().getTime() + Math.random();
+	location.reload();
+}
+</script>
+</head>
+<body >
+<img id="vlc_pic" style="background" src="" width=500  height=500>
+<table id="setRectParamer" width="20%" height="80"  src="about:blank">
+<tr height="25"><td class="v1 p2"><table  class="v2 f14 md1">
+<!-- <tr height="25"><td colspan="2" class="h1 v2 md2 f16"><strong><script>document.write(_devicestatus);</script></strong></td></tr> -->
+<tr height="25"><td class="md4">起点坐标（pix）</td><td class="md2">&nbsp;&nbsp;<input id="start_node" size="10"></td></tr>
+<tr height="25"><td class="md4">宽（pix）</td><td class="md2">&nbsp;&nbsp;<input id="rect_width" size="10"></td></tr>
+<tr height="25"><td class="md5">高（pix）</td><td class="md5">&nbsp;&nbsp;<input id="ret_heigh" size="10"></td></tr>
+<script>
+	$("#vlc_pic").attr("src","images/bg_right.jpg");
+	$("#start_node").val(start_nx0+","+start_ny0);
+	$("#rect_width").val(rect_w0);
+	$("#ret_heigh").val(rect_h0);
+</script>
+</table></td></tr></table>
+<!--<div width="1080" height="30" align="left"></div> -->
+<button type="button" name="clear_rect" onclick="location.reload()" id="clear_rect">clear_rect</button>
+<button type="button" name="set_rect" onclick="set_rect()" id="set_rect">set_rect</button>
+
+</body>
+</html>

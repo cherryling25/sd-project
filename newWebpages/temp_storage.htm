@@ -1,0 +1,369 @@
+﻿<!-- version:20180820-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<META http-equiv="X-UA-Compatible" content="IE=Edge; IE=8; IE=11">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" tppabs="http://192.168.100.2:8080/style.css" type="text/css">
+<title>ShiDe</title>
+<script type="text/javascript" src="jquery.min.js" tppabs="http://192.168.100.2:8080/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.18.custom.min.js" tppabs="http://192.168.100.2:8080/jquery/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="public.js" tppabs="http://192.168.100.2:8080/public.js"></script>
+<script type="text/javascript" src="tempStorage.js" tppabs="http://192.168.100.2:8080/tempStorage.js"></script>
+<script src="appver.js" tppabs="http://192.168.100.2:8080/appver.js"></script>
+<script src="get_param.cgi" tppabs="http://192.168.100.2:8080/get_param.cgi"></script>
+<script src="video.min.js" tppabs="http://192.168.100.2:8080/video.min.js"></script>
+<link rel="stylesheet" href="video-js.min.css" tppabs="http://192.168.100.2:8080/video-js.min.css" >
+<link rel="stylesheet" href="style.css" tppabs="http://192.168.100.2:8080/style.css" type="text/css">
+<link rel="stylesheet" href="app.css" tppabs="http://192.168.100.2:8080/app.css">
+<link rel="stylesheet" href="tempStyle.css" tppabs="http://192.168.100.2:8080/tempStyle.css">
+<script type="text/javascript">
+window.status = 1;
+
+function flowMe() {
+
+alert('000');
+
+}
+window.onscroll = flowMe;
+</script>
+<style type="text/css">
+.divHead{
+	width:800px;
+	height:50px;
+	top:0px;
+	position:absolute;
+}
+.divImg{
+	margin-top:10px;
+	background:white;
+	position:absolute;
+}
+.imgCell{
+	height:60px;
+	width:90px;
+	left:100px;
+	position:absolute;
+}
+.checkCell{
+	left:35px;
+	top:20px;
+	position:absolute;
+}
+.textCell{
+	left:300px;
+	top:18px;
+	background-color:#FFF;
+	position:absolute;
+}
+.downCell{
+	left:650px;
+	top:20px;
+	height:30px;
+	width:30px;
+	position:absolute;
+}
+.divNode{
+	height:70px;
+	width:800px;
+	display:inline-block;
+	text-align:center;
+	position:relative;
+}
+.divForm{
+	top:60px;
+	width:800px;
+//	position:absolute;
+	position:relative
+}
+.divPreview{
+	top:60px;
+//	left:800px;
+	left:200px;
+	width:384px;
+	height:288px;
+	position:relative;
+}
+.Plate{
+	height:40px;
+	width:400px;
+	cursor:pointer;
+	line-height:40px;
+	text-align:center;
+	position:absolute;
+}
+
+.leftPlate{
+	background-color:#ddd;
+}
+.rightPlate{
+	left:400px;
+	background-color:#eee;
+}
+.videoPreview{
+	top:60px;
+	left:600px;
+	width:200px;
+	height:450px;
+	overflow-y:scroll;
+	position:absolute;
+}
+.imgVideoCell{
+	height:120px;
+	width:160px;
+	z-index:1;
+	position:absolute;
+}
+.coverLayer{
+	height:120px;
+	width:160px;
+	z-index:2;
+	display:none;
+	color:black;
+	font-size:12px;
+	text-align:center;
+	line-height:120px;
+	cursor:pointer;
+	background-color:rgba(255,255,255,0.2);
+	position:absolute;
+}
+.checkimg{
+	width:10px;
+	height:10px;
+	display:none;
+	position:absolute;
+}
+.coverCheckbox{
+	top:50px;
+	right:5px;
+	width:10px;
+	height:10px;
+	background-color:#789;
+	position:absolute;
+}
+.divVideoIndex{
+	height:120px;
+	width:180px;
+	display:inline-block;
+	position:relative;
+}
+</style>
+</head>
+<body onLoad="loadImg()" onscroll="imgPreview()">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="javascript:if(confirm(%27http://www.infiray.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.infiray.com/%27" tppabs="http://www.infiray.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/shideit.png" tppabs="http://192.168.100.2:8080/images/shideit.png" alt=""></div>
+                </div>
+                <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li_z" style="left:54%;">
+							<div class="listCell" style="top:23px;">
+								<a href="temp_messure.htm" tppabs="http://192.168.100.2:8080/temp_messure.htm"><script>document.write(_thermometric);</script></a>
+							</div>
+                        </li>
+                        <li class="head_nav_list_li_z active" style="left:60%;">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <div class="listCell" style="top:23px;">
+                            	 <a href="temp_storage.htm" tppabs="http://192.168.100.2:8080/temp_storage.htm"><script>document.write(_storage);</script></a>
+                            </div>
+                        </li>
+                        <li class="head_nav_list_li_z" style="left:66%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="setupList()"><script>document.write(_settings);</script></a>
+                        	</div>
+                        </li>
+                        <li id="setupList" class="head_nav_list_li_z show" style="left:66%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" >
+                                    <a class="show" href="ip.htm" tppabs="http://192.168.100.2:8080/ip.htm">
+                                        <script>document.write(_Network);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show">
+                                    <a class="show" href="log.htm" tppabs="http://192.168.100.2:8080/log.htm">
+                                        <script>document.write(_log);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" >
+                                    <a class="show" href="upgrade.htm" tppabs="http://192.168.100.2:8080/upgrade.htm">
+                                        <script>document.write(_maintenance);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell4Top show" >
+                                    <a class="show" href="user.htm" tppabs="http://192.168.100.2:8080/user.htm">
+                                        <script>document.write(_user);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell5Top show" >
+                                    <a class="show" href="platform_access.htm" tppabs="http://192.168.100.2:8080/platform_access.htm">
+                                        <script>document.write(_platform);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell6Top show">
+                                    <a class="show" href="status.htm" tppabs="http://192.168.100.2:8080/status.htm">
+                                        <script>document.write(_device);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                         <!-- >
+                        <li class="head_nav_list_li_z" style="left:72%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="languageList()"><script>document.write(_language);</script></a>
+                        	</div>
+                        </li>
+                        <li id="languageList" class="head_nav_list_li_z show" style="left:72%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        < -->
+                        <div class="header_tips" style="right:60px;">
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" style="top:13px;" src="./images/loginuser1.png" tppabs="http://192.168.100.2:8080/images/loginuser1.png" ondragstart="return false" ></img>
+                        	</div>
+                        	<div class="relaCell" style="width:100px;top:10px;cursor:default;" id="loginName">
+                        		<script>document.write('');</script>
+                        	</div>
+							<div id="logoutDiv" class="relaCell" style="width:60px;color:#666;top:10px;" onclick="logout()" onmouseover="foucus_header_tips('logoutDiv')" onmouseout="defoucus_header_tips('logoutDiv','#666')">
+								<script>document.write(_logout);</script>
+							</div>
+                        </div>
+                        <div class="header_tips" style="right:60px;top:38px;" >
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" src="./images/language1.png" tppabs="http://192.168.100.2:8080/images/language1.png" ondragstart="return false"></img>
+                        	</div>
+							<div id="languageshow" class="relaCell" style="top:0px;" onclick="languageList()" onmouseover="foucus_header_tips('languageshow')" onmouseout="defoucus_header_tips('languageshow')">
+                        		<script>document.write(_language);</script>
+                        	</div>
+                        </div>
+                        <li id="languageList" class="head_nav_list_li_z show" style="right:200px;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show px10_font" style="text-align:left;" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='center-in-center' style="width:800px;top:100px;">
+	<div class="divHead" style="height:40px;">
+		<div id="imageStorage" class="Plate leftPlate" onclick="showPlate('imagePlate')"><script>document.write(_snapshotStorage);</script></div>
+		<div id="recordStorage" class="Plate rightPlate" onclick="showPlate('recordPlate')"><script>document.write(_reordStorage);</script></div>
+	</div>
+</div>
+<div id="imagePlate" class='center-in-center' style="width:800px;top:140px;">
+	<div class="divHead">
+		<div onclick="deleteCell()" class='divImg' style="left:108px;"><img title="delete" src="./images/deletePhoto.png" tppabs="http://192.168.100.2:8080/images/deletePhoto.png" onmouseover="showFocus(this,'deletePhoto')" onmouseout="showBlur(this,'deletePhoto')"/></div>
+		<div class="modular" style="left:28px;">
+			<input id="allSelect" class="modularCell" type="checkbox" title="all select"  onchange="allSelect(this.checked)"/>
+		</div>
+		<div class='divImg' style="left:188px;">
+			<img title="format" style="width:30px;height:30px;" src="./images/format.png" tppabs="http://192.168.100.2:8080/images/format.png" onclick="format()" onmouseover="showFocus(this,'format')" onmouseout="showBlur(this,'format')" />
+		</div>
+	</div>
+	<div class="divPreview" id="divPreview">
+		<img id="imgPreview" src="">
+	</div>
+	<div class="divForm" id="divNode">
+	</div>
+	
+</div>
+<div id="recordPlate" class='center-in-center' style="width:800px;top:140px;display:none;">
+	<div class="divHead">
+		<div onclick="deleteVideoCell()" class='divImg' style="left:108px;"><img style="width:30px;height:30px;" title="delete" src="./images/deletePhoto.png" tppabs="http://192.168.100.2:8080/images/deletePhoto.png" onmouseover="showFocus(this,'deletePhoto')" onmouseout="showBlur(this,'deletePhoto')"/></div>
+		<div class="modular" style="left:28px;">
+			<input id="allVideoSelect" class="modularCell" type="checkbox" title="all select"  onchange="allVideoSelect(this.checked)"/>
+		</div>
+		<div class='divImg' style="left:188px;">
+			<img title="format" style="width:30px;height:30px;" src="./images/format.png" tppabs="http://192.168.100.2:8080/images/format.png" onclick="format()" onmouseover="showFocus(this,'format')" onmouseout="showBlur(this,'format')" />
+		</div>
+	</div>
+	<div style="background-color:#345;width:800px;height:450px;position:absolute;top:60px;">
+		<video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" style="width:600px;height:450px;" poster="./images/shideit.png">
+			<source src="" type="video/mp4">
+		</video>
+	</div>
+	<div id="videoPreview" class="videoPreview">
+		<img id="videoIndex" src=''></img>
+	</div>
+</div>
+<div id="cover_plate" class="center-in-center" style="top:0px;width:100%;height:100%;display:none;z-index=2;">
+</div>
+<div id="progress_frame" class="frame center " style="display:none;">
+	<div id="progress_title" class="title" >
+    	<script>document.write(_sd_format_tips);</script>
+    </div>
+    <div id="progress_0"  class="move  width_0" style=";">
+    </div>
+    <div id="progress_10"  class="move  width_10" style=";">
+    </div>
+    <div id="progress_20"  class="move  width_20" style=";">
+    </div>
+    <div id="progress_30"  class="move  width_30" style=";">
+    </div>
+    <div id="progress_40"  class="move  width_40" style=";">
+    </div>
+    <div id="progress_50"  class="move  width_50" style=";">
+    </div>
+    <div id="progress_60"  class="move  width_60" style=";">
+    </div>
+    <div id="progress_70"  class="move  width_70" style=";">
+    </div>
+    <div id="progress_80"  class="move  width_80" style=";">
+    </div>
+    <div id="progress_90"  class="move  width_90" style=";">
+    </div>
+    <div id="progress_100"  class="move  width_100" style=";">
+    </div>
+    <div id="container"  class="container  width_100" style=";">
+    </div>
+    <div id="progress-show"  class="progress-show  width_100" style=";">
+    </div>
+</div>
+<div class="buttomTip" style="">
+		<div class="bottomFont" style=""><strong>ShiDe Technologies Co., Ltd.</strong></div><br/>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE></TITLE>
+<script src="get_param.cgi"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script>  
+function body_onload()  
+{  
+	var url = 'set_param.cgi?&group_tag=set_value';
+	url+='&set_cmd=TakePicture';
+	url+='&monitor_ip='+ip;
+	url+='&' + new Date().getTime() + Math.random();
+	var xmlHttpReg = null;
+	if (window.ActiveXObject) {//如果是IE
+
+	  xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+
+	} else if (window.XMLHttpRequest) {
+
+	  xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+	}
+
+	//如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+	if (xmlHttpReg != null) {
+	  xmlHttpReg.open("get", url, true);
+	   xmlHttpReg.send(null);
+	  xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+
+	}
+
+	//回调函数
+	//一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+
+	//设定函数doResult()
+	function doResult() {
+
+	  if (xmlHttpReg.readyState == 4) {//4代表执行完成		 
+		  if (xmlHttpReg.status == 200) {//200代表执行成功
+			  //将xmlHttpReg.responseText的值赋给ID为resText的元素
+			  $("#t2").attr("src",xmlHttpReg.responseText); 
+
+		  }
+	  }
+
+	} 
+}  
+</script> 
+<body onload="body_onload()">
+<img src="" id="t2" height="650" align ="left" />
+</body>
+</html>

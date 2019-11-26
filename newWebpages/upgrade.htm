@@ -1,0 +1,635 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ShiDe</title>
+<script src="get_param.cgi" tppabs="http://192.168.100.2:8080/get_param.cgi"></script>
+<script type="text/javascript" src="jquery.min.js" tppabs="http://192.168.100.2:8080/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="./jquery/jquery-form.js" tppabs="http://192.168.100.2:8080/jquery/jquery-form.js"></script>
+<script type="text/javascript" src="public.js" tppabs="http://192.168.100.2:8080/public.js"></script>
+<link rel="stylesheet" href="style.css" tppabs="http://192.168.100.2:8080/style.css" type="text/css">
+<link rel="stylesheet" href="app.css" tppabs="http://192.168.100.2:8080/app.css">
+<link rel="stylesheet" href="tempStyle.css" tppabs="http://192.168.100.2:8080/tempStyle.css">
+<style type="text/css">
+.nonclick{
+	pointer-events: none;
+}
+</style>
+<script type="text/javascript">
+var BYTES_PER_CHUNK = 2*1024 * 1024; // 每个文件切片大小定为1MB .
+var slices;
+var totalSlices;
+var all_index=0,total=11;
+
+var total_seconds = 200;
+var current_secons = 0;
+
+function calculate_persent(index,total){
+	var num = Math.floor((index/total)*100);
+	var per = Math.floor(num/10)*10;
+	return per;
+}
+//升级等待
+function timer()
+{
+	current_secons++;
+	$("#progress_title").text(_updatingTip);
+	progress_entry(calculate_persent(current_secons,total_seconds));
+	if (current_secons == total_seconds){
+		window.onbeforeunload = null;
+		top.location='index.htm'/*tpa=http://192.168.100.2:8080/index.htm*/;
+	}else
+		setTimeout('timer()',1000);	
+}
+
+function forbidden_action(){
+	document.onkeydown = function(e) {
+        e = window.event || e;
+        var k = e.keyCode;		
+		
+        //屏蔽ctrl+R，F5键，ctrl+F5键  F3键！验证
+        if ((e.ctrlKey == true && k == 82) || (k == 116)
+                || (e.ctrlKey == true && k == 116)||k==114) {
+            e.keyCode = 0;
+            //alert("当前页面不能刷新！");
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+ 
+        }
+        if (k == 8) {
+           // alert("不能返回或后退！");
+            e.keyCode = 0;
+            e.returnValue = false;
+            return false;
+        }
+        //屏蔽 Ctrl+n   验证可以实现效果
+        if (e.ctrlKey && k == 78){
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+			
+            return false;
+            }
+        //屏蔽F11   验证可以实现效果
+        if (k == 122) {
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+			
+            return false;
+        }
+        //屏蔽 shift+F10  验证可以实现效果      
+        if ((e.shiftKey && k == 121)||(e.ctrlKey && k == 121)){
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+			
+            return false;
+            }
+ 
+        //屏蔽Alt+F4  
+        if ((e.altKey) && (k== 115)) {
+            window.showModelessDialog("about:blank", "",
+                    "dialogWidth:1px;dialogheight:1px");
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+			
+            return false;
+        }
+        //屏蔽 Alt+ 方向键 ← ;屏蔽 Alt+ 方向键 → ！验证
+        if ((e.altKey)
+                && ((k == 37) || (k == 39))) {
+            
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+			
+            return false;
+        }
+ 
+    };
+    
+    //屏蔽右键菜单，！验证
+    document.oncontextmenu = function(event) {
+        if (window.event) {
+            event = window.event;
+        }
+        try {
+            var the = event.srcElement;
+            if (!((the.tagName == "INPUT" && the.type.toLowerCase() == "text") || the.tagName == "TEXTAREA")) {
+                return false;
+            }
+            return true;
+        } catch (e) {
+            return false;
+        }
+    };
+}
+
+function showfilenale(){
+	//alert('00');
+	var text = document.getElementById("textfield");
+	var name = document.getElementById("file").files[0].name;
+	//alert(name);
+	text.value = name;
+}
+
+function calculate_persent(index,total){
+	var num = Math.floor((index/total)*100);
+	var per = Math.floor(num/10)*10;
+	return per;
+}
+
+function progress_entry(per_current){
+	
+	if(typeof per_current != 'number' || per_current>100 || per_current<0){
+
+		return 0;
+	}
+	
+	for(var i=0; i<=10; i++){
+		var per = 10*i;
+		var id = 'progress_' + per;
+		var obj = document.getElementById(id);
+		
+		if(obj != null){
+			obj.style.display = 'none';
+		}
+	}
+
+	var curent_id = 'progress_' + per_current;
+	var curent_obj = document.getElementById(curent_id);
+	var show = document.getElementById("progress-show");
+	var cover = document.getElementById("cover_plate");
+	var frame = document.getElementById("progress_frame");
+
+	curent_obj.style.display = 'inline';
+	show.innerText = per_current + '%';
+	cover.style.backgroundColor = 'rgba(100,100,100,0.4)';
+	cover.style.display = 'inline';
+	frame.style.display = 'inline';
+}
+
+function progress_init(){
+	
+	progress_entry(calculate_persent(all_index,total));
+	
+	all_index++;
+	if(all_index>total){
+		all_index = 0;
+	}
+	
+	setTimeout(progress_init,1000);
+}
+
+function onload(){
+	setCurrentUrl('..');
+	showLoginName();
+	forbidden_action();
+	//setTimeout(progress_init,5000);
+}
+
+
+//判断升级文件名
+function is_upgrade_file(file){
+	var type = '';
+	
+	for(var i=file.length-1; i>=0; i--){
+		if(file.substr(i,1) == '.')
+			type = file.substr(i+1);
+	}
+	
+	if(type == 'img')
+		return true;
+	else
+		return false;
+}
+
+//发送请求
+function sendRequest() {
+
+	var blob = document.getElementById("file").files[0];
+	var start = 0;
+	var end;
+	var index = 0;
+	
+	if(!is_upgrade_file(blob.name)){
+
+		alert(_updateError);
+		return 0;
+	}
+
+	if(is_sdcard_exist() < 0){
+		alert(_sdcard_nonexist);
+		return 0;
+	}
+
+	//禁止点击链接
+	no_click('head');
+
+	//固件升级时，刷新页面或者退出弹框提示
+	close_tips();
+
+	// 计算文件切片总数
+	slices = Math.ceil(blob.size / BYTES_PER_CHUNK);
+	totalSlices= slices;
+	while(start < blob.size) {
+		end = start + BYTES_PER_CHUNK;
+		if(end > blob.size) {
+			end = blob.size;
+		}
+		progress_entry(calculate_persent(index+1,totalSlices));
+		
+		uploadFile(blob, index, start, end);
+
+		start = end;
+		index++;
+	}
+	
+	top.reboot_seconds = 90;
+	var url = 'set_param.cgi?&group_tag=set_value.htm'/*tpa=http://192.168.100.2:8080/set_param.cgi?&group_tag=set_value*/;
+	url+='&set_cmd=Updater';
+	url+='&next_url=reboot.htm';
+	url+='&' + new Date().getTime() + Math.random();
+	send_command(url);	
+
+	setTimeout(timer, 10); 
+}
+function send_command(url){
+	//alert(url);
+	var xmlHttpReg = null;
+	if (window.ActiveXObject) {//如果是IE
+
+	  xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+
+	} else if (window.XMLHttpRequest) {
+
+	  xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+	}
+
+	//如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+	if (xmlHttpReg != null) {
+	  xmlHttpReg.open("get", url, false);
+	   xmlHttpReg.send(null);
+	  xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+
+	}
+
+	//回调函数
+	//一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+
+	//设定函数doResult()
+	function doResult() {
+
+	  if (xmlHttpReg.readyState == 4) {//4代表执行完成		 
+		  if (xmlHttpReg.status == 200) {//200代表执行成功
+			  //将xmlHttpReg.responseText的值赋给ID为resText的元素
+			  //$("#t2").attr("src",xmlHttpReg.responseText); 
+			  reboot_seconds = 60;
+			  window.location.helf="http://"+ip+":8080/reboot.htm";
+		  }
+	  }
+
+	} 
+}
+//上传文件
+function uploadFile(blob, index, start, end) {
+	var xhr;
+	var fd;
+	var chunk;  
+	var sliceIndex=blob.name+index;
+	chunk =blob.slice(start,end);//切割文件	
+	fd = new FormData();
+	fd.append("UpgradeFileName", chunk, sliceIndex);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'cmd.cgi?cmd_tag=firmware_upgrade&group_tag=upgrade.htm'/*tpa=http://192.168.100.2:8080/cmd.cgi?cmd_tag=firmware_upgrade&group_tag=upgrade*/, false);//false表示同步传送，因为后端内存不够，true为异步传送，效率高速度快
+	xhr.send(fd);
+	if((xhr.status >=200 && xhr.status < 300) || xhr.status == 304){
+		setTimeout("",10);
+	}else{
+		uploadFile(blob, index, start, end);
+	}
+}
+//2019.01.14
+function analyObj(id){
+	var ret='';
+	if(id.indexOf('restart')>-1){
+		ret = 'restart';
+	}else if(id.indexOf('restore')>-1){
+		ret = 'restore';
+	}else if(id.indexOf('upgrade')>-1){
+		ret = 'upgrade';
+	}else{
+		return -1;
+	}
+	return ret;
+}
+
+var operator_down=140;
+var developer_down=280;
+var operator_up=50,developer_up=100;
+
+function upObject(){
+	var img_restart = document.getElementById('restart_options');
+	var img_restore = document.getElementById('restore_options');
+	var img_upgrade = document.getElementById('upgrade_options');
+	var obj_restart = document.getElementById('restart');
+	var obj_restore = document.getElementById('restore');
+	var obj_upgrade = document.getElementById('upgrade');
+	var div_restore = document.getElementById('restoreDiv');
+	var div_upgrade = document.getElementById('upgradeDiv');
+	var restore_top = 120, upgrade_top=240;
+	if(img_restart.name === 'up'){
+		restore_top = restore_top - 70;
+		upgrade_top = upgrade_top - 70;
+		obj_restart.style.display = 'none';
+	}
+	if(img_restore.name === 'up'){
+		upgrade_top = upgrade_top - 70;
+		obj_restore.style.display = 'none';
+	}
+	if(img_upgrade.name === 'up'){
+		obj_upgrade.style.display = 'none';
+	}
+	div_restore.style.top = restore_top+'px';
+	div_upgrade.style.top = upgrade_top+'px';
+	
+}
+
+function downObject(){
+	var img_restart = document.getElementById('restart_options');
+	var img_restore = document.getElementById('restore_options');
+	var img_upgrade = document.getElementById('upgrade_options');
+	var obj_restart = document.getElementById('restart');
+	var obj_restore = document.getElementById('restore');
+	var obj_upgrade = document.getElementById('upgrade');
+	var div_restore = document.getElementById('restoreDiv');
+	var div_upgrade = document.getElementById('upgradeDiv');
+	var restore_top = 50, upgrade_top=100;
+	if(img_restart.name === 'down'){
+		restore_top = restore_top + 70;
+		upgrade_top = upgrade_top + 70;
+		obj_restart.style.display = 'inline';
+	}
+	if(img_restore.name === 'down'){
+		upgrade_top = upgrade_top + 70;
+		obj_restore.style.display = 'inline';
+	}
+	if(img_upgrade.name === 'down'){
+		obj_upgrade.style.display = 'inline';
+	}
+	div_restore.style.top = restore_top+'px';
+	div_upgrade.style.top = upgrade_top+'px';
+}
+
+function upDown(id){
+	var img = document.getElementById(id);
+	var obj = document.getElementById(analyObj(id));
+	if(img.name === 'up'){
+		img.src = './images/up.jpg';
+		img.name = 'down';
+		if(obj != null){
+			downObject();
+		}
+	}else if(img.name === 'down'){
+		img.src = './images/down.jpg';
+		img.name = 'up';
+		if(obj != null){
+			upObject();
+		}
+	}
+}
+
+</script>
+</head>
+<body onload="onload()">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="javascript:if(confirm(%27http://www.shidtech.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.infiray.com/%27" tppabs="http://www.infiray.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/shideit.png" tppabs="http://192.168.100.2:8080/images/shideit.png" alt=""></div>
+                </div>
+                 <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li_z" style="left:54%;">
+							<div class="listCell" style="top:23px;">
+								<a href="temp_messure.htm" tppabs="http://192.168.100.2:8080/temp_messure.htm"><script>document.write(_thermometric);</script></a>
+							</div>
+                        </li>
+                        <li class="head_nav_list_li_z" style="left:60%;">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <div class="listCell" style="top:23px;">
+                            	 <a href="temp_storage.htm" tppabs="http://192.168.100.2:8080/temp_storage.htm"><script>document.write(_storage);</script></a>
+                            </div>
+                        </li>
+                        <li class="head_nav_list_li_z active" style="left:66%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="setupList()"><script>document.write(_settings);</script></a>
+                        	</div>
+                        </li>
+                        <li id="setupList" class="head_nav_list_li_z show" style="left:66%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" >
+                                    <a class="show" href="ip.htm" tppabs="http://192.168.100.2:8080/ip.htm">
+                                        <script>document.write(_Network);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show">
+                                    <a class="show" href="log.htm" tppabs="http://192.168.100.2:8080/log.htm">
+                                        <script>document.write(_log);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" >
+                                    <a class="show" href="upgrade.htm" tppabs="http://192.168.100.2:8080/upgrade.htm">
+                                        <script>document.write(_maintenance);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell4Top show" >
+                                    <a class="show" href="user.htm" tppabs="http://192.168.100.2:8080/user.htm">
+                                        <script>document.write(_user);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell5Top show" >
+                                    <a class="show" href="platform_access.htm" tppabs="http://192.168.100.2:8080/platform_access.htm">
+                                        <script>document.write(_platform);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell6Top show">
+                                    <a class="show" href="status.htm" tppabs="http://192.168.100.2:8080/status.htm">
+                                        <script>document.write(_device);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- >
+                        <li class="head_nav_list_li_z" style="left:72%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="languageList()"><script>document.write(_language);</script></a>
+                        	</div>
+                        </li>
+                        <li id="languageList" class="head_nav_list_li_z show" style="left:72%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        < -->
+                        <div class="header_tips" style="right:60px;">
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" style="top:13px;" src="./images/loginuser1.png" tppabs="http://192.168.100.2:8080/images/loginuser1.png" ondragstart="return false" ></img>
+                        	</div>
+                        	<div class="relaCell" style="width:100px;top:10px;cursor:default;" id="loginName">
+                        		<script>document.write('');</script>
+                        	</div>
+							<div id="logoutDiv" class="relaCell" style="width:60px;color:#666;top:10px;" onclick="logout()" onmouseover="foucus_header_tips('logoutDiv')" onmouseout="defoucus_header_tips('logoutDiv','#666')">
+								<script>document.write(_logout);</script>
+							</div>
+                        	
+                        </div>
+                        <div class="header_tips" style="right:60px;top:38px;" >
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" src="./images/language1.png" tppabs="http://192.168.100.2:8080/images/language1.png" ondragstart="return false"></img>
+                        	</div>
+							<div id="languageshow" class="relaCell" style="top:0px;" onclick="languageList()" onmouseover="foucus_header_tips('languageshow')" onmouseout="defoucus_header_tips('languageshow')">
+                        		<script>document.write(_language);</script>
+                        	</div>
+                        </div>
+                        <li id="languageList" class="head_nav_list_li_z show" style="right:200px;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show px10_font" style="text-align:left;" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main_plate" class='center-in-center' style="width:640px;height:360px;z-index=1;">
+	<div id="restartDiv" class='parentDiv' style="height:120px;top:0px;">
+		<div class='topBotBor' style="top:0px;"><strong><script>document.write(_restart);</script>
+			<img id="restart_options" class="upDowmImg" name='up' src="./images/down.jpg" tppabs="http://192.168.100.2:8080/images/down.jpg" onclick="upDown(this.id)"/>
+		</div>
+		<div id="restart" class="subDiv" style="display:none;">
+			<div class="childDiv" style="left:150px;"><script>document.write(_restart);</script>
+				<button class="subbtn" style="" id="set2" onClick="javascript:reboot();"> 
+					<script>document.write(_restart);</script>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div id="restoreDiv" class='parentDiv' style="height:120px;top:50px;">
+		<div class='topBotBor' style="top:0px;"><strong><script>document.write(_restore_factory);</script>
+			<img id="restore_options" class="upDowmImg" name='up' src="./images/down.jpg" tppabs="http://192.168.100.2:8080/images/down.jpg" onclick="upDown(this.id)"/>
+		</div>
+		<div id="restore" class="subDiv" style="display:none;">
+			<div class="childDiv" style="left:150px;"><script>document.write(_restore_factory);</script>
+				<button class="subbtn" style="" id="set1" onClick="javascript:restore_factory();">
+					<script>document.write(_restore_factory);</script>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div id="upgradeDiv" class='parentDiv' style="height:120px;top:100px;">
+		<div class='topBotBor' style="top:0px;"><strong><script>document.write(_upgrade_firmware);</script>
+			<img id="upgrade_options" class="upDowmImg" name='down' src="./images/up.jpg" tppabs="http://192.168.100.2:8080/images/up.jpg" onclick="upDown(this.id)"/>
+		</div>
+		<div id="upgrade" class="subDiv" style="display:inline;">
+			<div class="childDiv" style="left:150px;"><script>document.write(_upgrade_file);</script>
+				<!-- ><form style="position:absolute;top:0px;left:250px;">
+					<input type="file" name="UpgradeFileName" id="file" size="20">
+					&nbsp;&nbsp;
+					<button id="upload" onClick="sendRequest()"> 
+					<script>document.write(_upgrade);</script> 
+					</button>
+				</form>
+				< -->
+				<!-- ><div style="position:absolute;top:40px;left:375px;height:40px;"><script>document.write(_upgrade);</script></div>< -->
+				<div class="file-box" style="left:100px;">    
+		            <form action="" method="post" enctype="multipart/form-data">    
+		            	<input type='text' name='textfield' id='textfield' class='txt' />    
+		            	<button class='btn' /><script>document.write(_browse);</script></button>
+		            	<input type="file" name="UpgradeFileName" class="file" id="file" size="28" onchange="showfilenale()" />    
+		            </form>    
+		        </div>
+		        <div style="left:70px;position:absolute;top:2px;">
+		        	<button id="upload" class="subbtn" onClick="sendRequest()"> 
+						<script>document.write(_upgrade);</script> 
+					</button>
+		        </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="cover_plate" style="top:0px;width:100%;height:100%;display:none;position:absolute;z-index=1000;">
+</div>
+<div id="progress_frame" class="frame center " style="display:none;">
+	<div id="progress_title" class="title" >
+    	<script>document.write(_uploadTip);</script> 
+    </div>
+    <div id="progress_0"  class="move  width_0" style=";">
+    </div>
+    <div id="progress_10"  class="move  width_10" style=";">
+    </div>
+    <div id="progress_20"  class="move  width_20" style=";">
+    </div>
+    <div id="progress_30"  class="move  width_30" style=";">
+    </div>
+    <div id="progress_40"  class="move  width_40" style=";">
+    </div>
+    <div id="progress_50"  class="move  width_50" style=";">
+    </div>
+    <div id="progress_60"  class="move  width_60" style=";">
+    </div>
+    <div id="progress_70"  class="move  width_70" style=";">
+    </div>
+    <div id="progress_80"  class="move  width_80" style=";">
+    </div>
+    <div id="progress_90"  class="move  width_90" style=";">
+    </div>
+    <div id="progress_100"  class="move  width_100" style=";">
+    </div>
+    <div id="container"  class="container  width_100" style=";">
+    </div>
+    <div id="progress-show"  class="progress-show  width_100" style=";">
+    </div>
+</div>
+<div class="buttomTip" style="">
+	<div class="bottomFont" style=""><strong>ShiDe Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html>

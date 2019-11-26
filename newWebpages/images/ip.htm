@@ -1,0 +1,358 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" tppabs="http://192.168.100.2:8080/style.css" type="text/css">
+<link rel="stylesheet" href="app.css" tppabs="http://192.168.100.2:8080/app.css">
+<link rel="stylesheet" href="tempStyle.css" tppabs="http://192.168.100.2:8080/tempStyle.css">
+<title>ShiDe</title>
+
+<script src="get_param.cgi" tppabs="http://192.168.100.2:8080/get_param.cgi"></script>
+<script type="text/javascript" src="jquery.min.js" tppabs="http://192.168.100.2:8080/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="public.js" tppabs="http://192.168.100.2:8080/public.js"></script>
+<script src="set_param.cgi-group_tag=network_info&get_set_type=get&network_type=ETH.js" tppabs="http://192.168.100.2:8080/set_param.cgi?group_tag=network_info&get_set_type=get&network_type=ETH"></script>
+<script>
+function checkIP(value){
+	//if (isNull(value)) return false;
+	var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g //匹配IP地址的正则表达式
+	if(re.test(value))
+	{
+		if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) return true;
+	}
+	return false;
+}
+
+function set_network()
+{
+	var url;
+	if($("#dhcp_enable").attr("checked")!="checked")
+	{
+		if(!checkIP($("#ip_setup").val())) {alert(_valid_ip); $("#ip_setup").focus();$("#ip_setup").select();return;}
+		if(!checkIP($("#mask_setup").val())) {alert(_valid_ip1); $("#mask_setup").focus();$("#mask_setup").select();return;}
+		if(!checkIP($("#gateway_setup").val())) {alert(_valid_ip2); $("#gateway_setup").focus();$("#gateway_setup").select();return;}
+		if(!checkIP($("#dns_setup1").val())) {alert(_valid_ip3); $("#dns_setup1").focus();$("#dns_setup1").select();return;}
+		if(!checkIP($("#dns_setup2").val())) {alert(_valid_ip4); $("#dns_setup2").focus();$("#dns_setup2").select();return;}
+	}
+
+	url='set_param.cgi-next_url=ethernet.htm&group_tag=network_info&get_set_type=set&network_type=ETH.htm'/*tpa=http://192.168.100.2:8080/set_param.cgi?next_url=ethernet.htm&group_tag=network_info&get_set_type=set&network_type=ETH*/;
+	url+='&STATIC_IP='+$("#ip_setup").val();
+	url+='&NETMASK='+$("#mask_setup").val();
+	url+='&GATEWAY='+$("#gateway_setup").val();
+	url+='&DNS1='+$("#dns_setup1").val();
+	url+='&DNS2='+$("#dns_setup2").val();
+	url+=($("#dhcp_enable").attr("checked")=="checked")?'&DHCP_EN=1':'&DHCP_EN=0';
+	location=url;
+
+}
+function dhcp_enable_onclick()
+{
+	($("#dhcp_enable").attr("checked")=="checked")?$("#tr_ip").hide():$("#tr_ip").show();
+	($("#dhcp_enable").attr("checked")=="checked")?$("#tr_mask").hide():$("#tr_mask").show();
+	($("#dhcp_enable").attr("checked")=="checked")?$("#tr_gateway").hide():$("#tr_gateway").show();
+	($("#dhcp_enable").attr("checked")=="checked")?$("#tr_dns1").hide():$("#tr_dns1").show();
+	($("#dhcp_enable").attr("checked")=="checked")?$("#tr_dns2").hide():$("#tr_dns2").show();
+	($("#dhcp_enable").attr("checked")=="checked")?$("#tr_set_network").css({'top':'90px'}):$("#tr_set_network").css({'top':'300px'});
+}	
+function initIP(){
+	var ip_inp = document.getElementById('ip_inp');
+	var mask_inp = document.getElementById('mask_inp');
+	var gateway_inp = document.getElementById('gateway_inp');
+	var dns_inp1 = document.getElementById('dns_inp1');
+	var dns_inp2 = document.getElementById('dns_inp2');
+	var rtspurl = document.getElementById('rtspurl');
+	ip_inp.value=ip;
+	mask_inp.value=mask;
+	gateway_inp.value=gateway;
+	dns_inp1.value=dns1;
+	dns_inp2.value=dns2;
+	//rtspurl.value="rtsp://"+ip+"/webcam";
+}
+
+function initEthernet(){
+	$("#dhcp_enable").attr("checked",DHCP_EN?true:false);
+	dhcp_enable_onclick();
+
+	$("#ip_setup").val(STATIC_IP);
+	$("#mask_setup").val(NETMASK);
+	$("#gateway_setup").val(GATEWAY);
+	$("#dns_setup1").val(DNS1);
+	$("#dns_setup2").val(DNS2);
+}
+
+//拉开时，间距20px，闭合时，间距10px, 抬头高度50，信息栏高度40。
+//全展开时
+var networkstatus_down = 330, networkconfig_down = 0;
+//全闭合时
+var networkstatus_up = 50, networkconfig_up = 0;
+//各班高度
+var networkstatus_height = 240, networkconfig_height = 280;
+
+function analyObj(id){
+	var ret='';
+	if(id.indexOf('networkStatus')>-1){
+		ret = 'networkStatusShow';
+	}else if(id.indexOf('networkConfig')>-1){
+		ret = 'networkConfigShow';
+	}else{
+		return -1;
+	}
+	
+	return ret;
+}
+//扩展后间距为40*num+20px,闭合后要留下10px的间距，所以减值为40*num+10px。
+//同理，downObject中的加值也是如此计算
+//收缩
+function upObject(){
+	var img_netsta = document.getElementById('networkStatus');
+	var img_netcfg = document.getElementById('networkConfig');
+	
+	var obj_netsta = document.getElementById('networkStatusShow');
+	var obj_netcfg = document.getElementById('networkConfigShow');
+	
+	var div_netsta = document.getElementById('networkStatusDiv');
+	var div_netcfg = document.getElementById('networkConfigDiv');
+	
+	var networkstatus_top = networkstatus_down, networkconfig_top = networkconfig_down ;
+
+	if(img_netcfg.name === 'up'){
+		networkstatus_top = networkstatus_top - networkconfig_height;
+		obj_netcfg.style.display = 'none';
+	}
+	if(img_netsta.name === 'up'){
+		obj_netsta.style.display = 'none';
+	}
+	
+	div_netsta.style.top = networkstatus_top + 'px';
+	div_netcfg.style.top = networkconfig_top + 'px';
+}
+
+//展开
+function downObject(){
+	var img_netsta = document.getElementById('networkStatus');
+	var img_netcfg = document.getElementById('networkConfig');
+	
+	var obj_netsta = document.getElementById('networkStatusShow');
+	var obj_netcfg = document.getElementById('networkConfigShow');
+	
+	var div_netsta = document.getElementById('networkStatusDiv');
+	var div_netcfg = document.getElementById('networkConfigDiv');
+	
+	var networkstatus_top = networkstatus_up, networkconfig_top = networkconfig_up ;
+	
+	if(img_netcfg.name === 'down'){
+		networkstatus_top = networkstatus_top + networkconfig_height;
+		obj_netcfg.style.display = 'inline';
+	}
+	if(img_netsta.name === 'down'){
+		obj_netsta.style.display = 'inline';
+	}
+
+	div_netsta.style.top = networkstatus_top + 'px';
+	div_netcfg.style.top = networkconfig_top + 'px';
+}
+
+function upDown(id){
+	var img = document.getElementById(id);
+	var obj = document.getElementById(analyObj(id));
+	
+	if(img.name === 'up'){
+		img.src = './images/up.jpg';
+		img.name = 'down';
+		if(obj != null){
+			downObject();
+		}
+	}else if(img.name === 'down'){
+		img.src = './images/down.jpg';
+		img.name = 'up';
+		if(obj != null){
+			upObject();
+		}
+	}
+}
+
+function body_onload()
+{
+	//dhcp
+	setCurrentUrl('..');
+	showLoginName();
+	initIP();
+	initEthernet();
+}
+
+</script>
+</head>
+<body onLoad="body_onload()">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="javascript:if(confirm(%27http://www.shidtech.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.infiray.com/%27" tppabs="http://www.infiray.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/shideit.png" tppabs="http://192.168.100.2:8080/images/shideit.png" alt=""></div>
+                </div>
+                 <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li_z" style="left:54%;">
+							<div class="listCell" style="top:23px;">
+								<a href="temp_messure.htm" tppabs="http://192.168.100.2:8080/temp_messure.htm"><script>document.write(_thermometric);</script></a>
+							</div>
+                        </li>
+                        <li class="head_nav_list_li_z" style="left:60%;">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <div class="listCell" style="top:23px;">
+                            	 <a href="temp_storage.htm" tppabs="http://192.168.100.2:8080/temp_storage.htm"><script>document.write(_storage);</script></a>
+                            </div>
+                        </li>
+                        <li class="head_nav_list_li_z active" style="left:66%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="setupList()"><script>document.write(_settings);</script></a>
+                        	</div>
+                        </li>
+                        <li id="setupList" class="head_nav_list_li_z show" style="left:66%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" >
+                                    <a class="show" href="ip.htm" tppabs="http://192.168.100.2:8080/ip.htm">
+                                        <script>document.write(_Network);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show">
+                                    <a class="show" href="log.htm" tppabs="http://192.168.100.2:8080/log.htm">
+                                        <script>document.write(_log);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" >
+                                    <a class="show" href="upgrade.htm" tppabs="http://192.168.100.2:8080/upgrade.htm">
+                                        <script>document.write(_maintenance);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell4Top show" >
+                                    <a class="show" href="user.htm" tppabs="http://192.168.100.2:8080/user.htm">
+                                        <script>document.write(_user);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell5Top show" >
+                                    <a class="show" href="platform_access.htm" tppabs="http://192.168.100.2:8080/platform_access.htm">
+                                        <script>document.write(_platform);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell6Top show">
+                                    <a class="show" href="status.htm" tppabs="http://192.168.100.2:8080/status.htm">
+                                        <script>document.write(_device);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                         <!-- >
+                        <li class="head_nav_list_li_z" style="left:72%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="languageList()"><script>document.write(_language);</script></a>
+                        	</div>
+                        </li>
+                        <li id="languageList" class="head_nav_list_li_z show" style="left:72%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        < -->
+                        <div class="header_tips" style="right:60px;">
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" style="top:13px;" src="./images/loginuser1.png" tppabs="http://192.168.1.10:80/images/loginuser1.png" ondragstart="return false" ></img>
+                        	</div>
+                        	<div class="relaCell" style="width:100px;top:10px;cursor:default;" id="loginName">
+                        		<script>document.write('');</script>
+                        	</div>
+							<div id="logoutDiv" class="relaCell" style="width:60px;color:#666;top:10px;" onclick="logout()" onmouseover="foucus_header_tips('logoutDiv')" onmouseout="defoucus_header_tips('logoutDiv','#666')">
+								<script>document.write(_logout);</script>
+							</div>
+                        	
+                        </div>
+                        <div class="header_tips" style="right:60px;top:38px;" >
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" src="./images/language1.png" tppabs="http://192.168.100.2:8080/images/language1.png" ondragstart="return false"></img>
+                        	</div>
+							<div id="languageshow" class="relaCell" style="top:0px;" onclick="languageList()" onmouseover="foucus_header_tips('languageshow')" onmouseout="defoucus_header_tips('languageshow')">
+                        		<script>document.write(_language);</script>
+                        	</div>
+                        </div>
+                        <li id="languageList" class="head_nav_list_li_z show" style="right:200px;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show px10_font" style="text-align:left;" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='center-in-center' style="width:640px;">
+	<div class='parentDiv' style="height:300px;z-index:1;">
+		<div class='topBotBor'><strong><script>document.write(_network_config);</script><img id="networkConfig" class="upDowmImg" name='down' src="./images/up.jpg" tppabs="http://192.168.100.2:8080/images/up.jpg" onclick="upDown(this.id)"/></div>
+		<div id="networkConfigShow" style="display:inline;">
+			<div class="childDiv cell0Buck ipCellLeft">DHCP<input class="checkCell" id="dhcp_enable" type="checkbox" onClick="dhcp_enable_onclick()" checked="checked"></div>
+			<div id="tr_ip" class="childDiv cell1Buck ipCellLeft"><script>document.write(_ip);</script><input type="text" value="" id="ip_setup" class="childValue"  maxlength="15" onKeyUp="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div id="tr_mask" class="childDiv cell2Buck ipCellLeft"><script>document.write(_mask);</script><input type="text" value="" id="mask_setup" class="childValue"  maxlength="15" onKeyUp="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div id="tr_gateway" class="childDiv cell3Buck ipCellLeft"><script>document.write(_gateway);</script><input type="text" value="" id="gateway_setup" class="childValue" maxlength="15" onKeyUp="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div id="tr_dns1" class="childDiv cell4Buck ipCellLeft"><script>document.write(_dns1);</script><input type="text" value="" id="dns_setup1" class="childValue" maxlength="15" onKeyUp="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div id="tr_dns2" class="childDiv cell5Buck ipCellLeft"><script>document.write(_dns2);</script><input type="text" value="" id="dns_setup2" class="childValue" maxlength="15" onKeyUp="value=value.replace(/[^\d.]/g,&#39;&#39;)" onbeforepaste="clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^\d.]/g,&#39;&#39;))"/></div>
+			<div id="tr_set_network" class="childDiv cell6Buck" >
+				<button class="childBut" style="left:240px;top:0px;" id="set" onClick="set_network()"> <script>document.write(_set);</script> </button>
+				<button class="childBut" style="left:340px;top:0px;" id="reload" onClick="location.reload()"> <script>document.write(_refresh);</script> </button>
+			</div>
+		</div>
+	</div>
+	<div class='parentDiv' id="networkStatusDiv" style="height:240px;top:330px;z-index:2;">
+		<div class='topBotBor'><strong><script>document.write(_network_status);</script><img id="networkStatus" class="upDowmImg" name='up' src="./images/down.jpg" tppabs="http://192.168.100.2:8080/images/down.jpg" onclick="upDown(this.id)"/></div>
+		<div id="networkStatusShow" style="display:none;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_ip);</script><input disabled="disabled" type="text" value="" id="ip_inp" class="childValue"/></div>
+			<div class="childDiv cell1Buck ipCellLeft"><script>document.write(_mask);</script><input disabled="disabled" type="text" value="" id="mask_inp" class="childValue"/></div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(_gateway);</script><input disabled="disabled" type="text" value="" id="gateway_inp" class="childValue"/></div>
+			<div class="childDiv cell3Buck ipCellLeft"><script>document.write(_dns1);</script><input disabled="disabled" type="text" value="" id="dns_inp1" class="childValue"/></div>
+			<div class="childDiv cell4Buck ipCellLeft"><script>document.write(_dns2);</script><input disabled="disabled" type="text" value="" id="dns_inp2" class="childValue"/></div>
+			<!-- ><div class="childDiv cell5Buck ipCellLeft"><script>document.write(_rtspurl);</script><input disabled="disabled" type="text" value="" id="rtspurl" class="childValue"/></div>< -->
+		</div>
+	</div>
+</div>
+<div class="buttomTip" style="">
+	<div class="bottomFont" style=""><strong>ShiDe Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html>
+<script>
+removeSelfClass();$("#dd-ip", parent.document).addClass("selected");
+</script>
+<script type="text/javascript" src="rowscolor.js" tppabs="http://192.168.1.10:80/rowscolor.js"></script>

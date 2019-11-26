@@ -1,0 +1,519 @@
+<!-- version:20180817-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<META http-equiv="X-UA-Compatible" content="IE=Edge; IE=8; IE=11">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="style.css" type="text/css">
+<title></title>
+<script src="get_param.cgi"></script>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="public.js"></script>
+<script type="text/javascript" src="tempMeasure.js"></script>
+<script src="appver.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<style type="text/css">
+.box {
+    width: 0px;
+    height: 0px;
+	color:#FFF;
+    position: absolute;
+	border:#FFF 1px solid;
+    cursor: move;
+	z-index:99;
+}
+#frameHead{
+	background-color:#CCC;
+	}
+.circle{
+	left:0px;
+	top:0px;
+	width:30px;
+	height:40px;
+	position:absolute;
+
+	}
+.imgType{
+	width:30px;
+	height:30px;
+	z-index:-1;
+	position:absolute;	
+}
+.divType{
+	left:0px;
+	top:0px;
+	width:30px;
+	height:30px;
+	border:black 1px solid;
+	position:absolute;
+
+}
+.tips{
+	left:-22px;
+	width:20px;
+	height:20px;
+	color:#FFF;
+	position:absolute;
+	text-align:center;
+	background-color:#36F;
+}
+.setColorWrite{
+	color:#FFF;
+	}
+.setColorRed{
+	color:#F00;
+	}
+.setColorBlue{
+	color:#00F;
+	z-index:9999999;
+	}
+.boxMonitor{
+	width:60px;
+	height:20px;
+	margin:2px 2px;
+	background-color:#CCC;
+	vertical-align:middle;
+	}
+.spotMonitor{
+	width:60px;
+	height:20px;
+	margin:2px 2px;
+	background-color:#CCC;
+	vertical-align:middle;
+	}
+.lineMonitor{
+	width:60px;
+	height:20px;
+	margin:2px 2px;
+	background-color:#CCC;
+	vertical-align:middle;
+}
+.alarmInfo {
+    margin-top:30px;
+    position:fixed;
+    width:300px;
+    height:300px;
+    line-height:50px;
+    background:#F6F1B3;
+    box-shadow:1px 3px 5px #000;
+    border:1px solid #000;
+    border-radius:8px;
+    text-align:center;
+    color:black;
+    z-index:10;
+    display:none;
+}
+
+.nav2 {
+    position:absolute;
+    top:-8px;
+    left:265px;
+    overflow:hidden;
+    width:13px;
+    height:13px;
+    background:#F6F1B3;
+    border-left:1px solid #DACE7C;
+    border-top:1px solid #DACE7C;
+    -webkit-transform:rotate(45deg);
+    -moz-transform:rotate(45deg);
+    -o-transform:rotate(45deg);
+    transform:rotate(45deg);
+}
+
+.alarmImg{
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+}
+
+.alarmDiv{
+	width:300px;
+	height:40px;
+	border:1px #000 solid;
+	border-left:none;
+	border-right:none;
+	border-top:none;
+	z-index:9;
+	text-align:left;
+	vertical-align:middle;
+}
+
+.alarmRight{
+	float:right;
+	width:70px;
+	position:relative;
+	background:#F6F1B3;
+	margin-top:10px;
+	margin-right:15px;
+	vertical-align:middle;
+}
+.gredColor{
+    vertical-align:middle;
+    background: -webkit-linear-gradient(#FFF, #CCC); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#FFF, #CCC); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#CCC, #FFF); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#FFF, #CCC); /* 标准的语法 */
+}
+.colorGred{
+	vertical-align:middle;
+    background: -webkit-linear-gradient(#CCC, #FFF); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#CCC, #FFF); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#FFF #CCC); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#CCC, #FFF); /* 标准的语法 */
+}
+
+</style>
+</head>
+<body  onLoad="body_onload()">
+
+<div id="frameHead" onDblClick="imageScreen(this)" style="width:768px; height:576px; position:absolute; background:transparent; float:left;" onselectstart="return false;">
+	<img id="imgDiv"  style="width:768px; height:576px;z-index:-999; position:absolute; " src="./images/signal1.png" ondragstart="return false" oncontextmenu="return false;" />
+</div>
+<div id="colorPlateDiv" style="left:768px;width:25px;height:576px;position:absolute;text-align:center;z-index:-999;">
+	<img id="colorPlatePhoto" style="width:30px;height:576px;" ondragstart="return false"/>
+</div>
+<div id="panel_del" style="left:793px;width:600px; height:576px; background-color:#CCC; position:absolute; float:left;">
+	<div id="boxPanel" style="width:600px; position:relative;">
+		<div style="height:20px;border:1px #000 solid;border-left:none;border-right:none;"><strong>BOX MEASURE:</strong></div>
+			<div><div class="alarmInfo" id="boxAlarmDiv0" style="left:893px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmBox0" onclick="alarmControl(this.value)"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionBox0"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureBox0"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdBox0" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisBox0" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeBox0" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>BOX0:&nbsp;</strong>max:<input type="text" value="___/___" id="maxValue0" class="boxMonitor" />&nbsp;min:<input type="text" value="___/___" id="minValue0" class="boxMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="averValue0" class="boxMonitor"/>&nbsp;&nbsp;<img id="alarmImgBox0" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='boxButton0' name="activeBox0" value="creat" class="boxMonitor" onClick="boxChange(this)"/></div>
+        <div><div class="alarmInfo" id="boxAlarmDiv1" style="left:893px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmBox1"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionBox1"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureBox1"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdBox1" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisBox1" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeBox1" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>BOX1:&nbsp;</strong>max:<input type="text" value="___/___" id="maxValue1" class="boxMonitor" />&nbsp;min:<input type="text" value="___/___" id="minValue1" class="boxMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="averValue1" class="boxMonitor"/>&nbsp;&nbsp;<img id="alarmImgBox1" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='boxButton1' name="activeBox1" value="creat" class="boxMonitor" onClick="boxChange(this)"/></div>
+        <div><div class="alarmInfo" id="boxAlarmDiv2" style="left:893px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmBox2"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionBox2"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureBox2"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdBox2" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisBox2" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeBox2" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>BOX2:&nbsp;</strong>max:<input type="text" value="___/___" id="maxValue2" class="boxMonitor" />&nbsp;min:<input type="text" value="___/___" id="minValue2" class="boxMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="averValue2" class="boxMonitor"/>&nbsp;&nbsp;<img id="alarmImgBox2" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='boxButton2' name="activeBox2" value="creat" class="boxMonitor" onClick="boxChange(this)"/></div>
+        <div><div class="alarmInfo" id="boxAlarmDiv3" style="left:893px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmBox3"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionBox3"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureBox3"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdBox3" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisBox3" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeBox3" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>BOX3:&nbsp;</strong>max:<input type="text" value="___/___" id="maxValue3" class="boxMonitor" />&nbsp;min:<input type="text" value="___/___" id="minValue3" class="boxMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="averValue3" class="boxMonitor"/>&nbsp;&nbsp;<img id="alarmImgBox3" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='boxButton3' name="activeBox3" value="creat" class="boxMonitor" onClick="boxChange(this)"/></div>
+        <div><div class="alarmInfo" id="boxAlarmDiv4" style="left:893px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmBox4"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionBox4"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureBox4"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdBox4" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisBox4" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeBox4" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>BOX4:&nbsp;</strong>max:<input type="text" value="___/___" id="maxValue4" class="boxMonitor" />&nbsp;min:<input type="text" value="___/___" id="minValue4" class="boxMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="averValue4" class="boxMonitor"/>&nbsp;&nbsp;<img id="alarmImgBox4" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='boxButton4' name="activeBox4" value="creat" class="boxMonitor" onClick="boxChange(this)"/></div>
+        <div><div class="alarmInfo" id="boxAlarmDiv5" style="left:893px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmBox5"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionBox5"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureBox5"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdBox5" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisBox5" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeBox5" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>BOX5:&nbsp;</strong>max:<input type="text" value="___/___" id="maxValue5" class="boxMonitor" />&nbsp;min:<input type="text" value="___/___" id="minValue5" class="boxMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="averValue5" class="boxMonitor"/>&nbsp;&nbsp;<img id="alarmImgBox5" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='boxButton5' name="activeBox5" value="creat" class="boxMonitor" onClick="boxChange(this)"/></div>
+    </div>
+    <div id="spotPanel" style="width:600px; position:relative;">
+    	<div style="height:20px;  border:1px #000 solid;border-left:none;border-right:none; "><strong>SPOT MEASURE:</strong></div>
+		<div><div class="alarmInfo" id="spotAlarmDiv0" style="left:705px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmSpot0"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionSpot0"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureSpot0"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdSpot0" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisSpot0" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeSpot0" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>SPOT0:&nbsp;</strong>value:<input type="text" value="___/___" id="spotValue0" class="spotMonitor"/>&nbsp;&nbsp;<img id="alarmImgSpot0" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='spotbutton0' name="spot0" value="creat" class="spotMonitor" onClick="spotChange(this)"/></div>
+		<div><div class="alarmInfo" id="spotAlarmDiv1" style="left:705px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmSpot1"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionSpot1"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureSpot1"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdSpot1" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisSpot1" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeSpot1" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>SPOT1:&nbsp;</strong>value:<input type="text" value="___/___" id="spotValue1" class="spotMonitor"/>&nbsp;&nbsp;<img id="alarmImgSpot1" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='spotbutton1' name="spot1" value="creat" class="spotMonitor" onClick="spotChange(this)"/></div>
+		<div><div class="alarmInfo" id="spotAlarmDiv2" style="left:705px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmSpot2"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionSpot2"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureSpot2"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdSpot2" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisSpot2" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeSpot2" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>SPOT2:&nbsp;</strong>value:<input type="text" value="___/___" id="spotValue2" class="spotMonitor"/>&nbsp;&nbsp;<img id="alarmImgSpot2" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='spotbutton2' name="spot2" value="creat" class="spotMonitor" onClick="spotChange(this)"/></div>
+		<div><div class="alarmInfo" id="spotAlarmDiv3" style="left:705px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmSpot3"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionSpot3"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureSpot3"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdSpot3" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisSpot3" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeSpot3" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>SPOT3:&nbsp;</strong>value:<input type="text" value="___/___" id="spotValue3" class="spotMonitor"/>&nbsp;&nbsp;<img id="alarmImgSpot3" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='spotbutton3' name="spot3" value="creat" class="spotMonitor" onClick="spotChange(this)"/></div>
+		<div><div class="alarmInfo" id="spotAlarmDiv4" style="left:705px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmSpot4"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionSpot4"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureSpot4"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdSpot4" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisSpot4" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeSpot4" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>SPOT4:&nbsp;</strong>value:<input type="text" value="___/___" id="spotValue4" class="spotMonitor"/>&nbsp;&nbsp;<img id="alarmImgSpot4" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='spotbutton4' name="spot4" value="creat" class="spotMonitor" onClick="spotChange(this)"/></div>
+		<div><div class="alarmInfo" id="spotAlarmDiv5" style="left:705px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmSpot5"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionSpot5"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureSpot5"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdSpot5" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisSpot5" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeSpot5" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>SPOT5:&nbsp;</strong>value:<input type="text" value="___/___" id="spotValue5" class="spotMonitor"/>&nbsp;&nbsp;<img id="alarmImgSpot5" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='spotbutton5' name="spot5" value="creat" class="spotMonitor" onClick="spotChange(this)"/></div>
+    </div>
+    <div id="linePanel" style="width:600px; position:relative;">
+    	<div style="height:20px;  border:1px #000 solid;border-left:none;border-right:none;"><strong>LINE MEASURE:</strong></div>
+    	<div><div class="alarmInfo" id="lineAlarmDiv0" style="left:885px;">
+				<div class="nav2"></div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;active alarm:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="activeAlarmLine0"><option class="alarm" value="0">NO</option><option class="alarm" value="1">YES</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;condition:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="conditionLine0"><option class="alarm" value="0">BELOW</option><option class="alarm" value="1">ABOVE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;capture:&nbsp;&nbsp;&nbsp;&nbsp;<select class="alarmRight" id="captureLine0"><option class="alarm" value="0">NONE</option><option class="alarm" value="1">IMAGE</option></option><option class="alarm" value="2">VIDE</option></select>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholdLine0" type="text" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Hysteresis(°C):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="hysteresisLine0" type="number" value="0"/>
+				</div>
+				<div class="alarmDiv">
+					&nbsp;&nbsp;Threshold time(ms):&nbsp;&nbsp;&nbsp;&nbsp;<input class="alarmRight" id="thresholeTimeLine0" type="number" value="0"/>
+				</div>
+			</div>
+		<strong>LINE:&nbsp;</strong>max:<input type="text" value="___/___" id="lineMaxValue0" class="lineMonitor" />&nbsp;min:<input type="text" value="___/___" id="lineMinValue0" class="lineMonitor"/>&nbsp;aver:<input type="text" value="___/___" id="lineAverValue0" class="lineMonitor"/>&nbsp;&nbsp;<img id="alarmImgLine0" ondragstart="return false" src="./images/alarm.png" class="alarmImg" />&nbsp;&nbsp;<input type="button" id='lineButton0' name="line0" value="creat" class="lineMonitor" onClick="lineChange(this)"/></div>
+    </div>
+    <div>
+        <table id="setInfraredParamer" width="600" height="200"  src="about:blank"  align="left">
+            <tr height="25"><td class="v1 p2"><table width="100%" class="v2 f14 md1">
+            <tr height="25">
+            <td colspan="2" class="md3" align="left" class="h1 v2 md2 f16"><strong>&nbsp;&nbsp;红外参数设置</strong></td></tr>
+            <tr height="25"><td class="md4" width="30%">&nbsp;&nbsp;色板 </td><td class="md2" >&nbsp;&nbsp;<select id="colorPlate" style="background-color:#CCC;" onChange="javascript:changeColorPhoto(this.id,this.value)">
+              <option value="0">黑热</option>
+              <option value="1">白热</option>
+              <option value="2">铁热</option>
+        </select></td></tr></td></tr>
+            <tr height="25"><td class="md4" width="30%">&nbsp;&nbsp;快门校正 </td><td class="md2" >&nbsp;&nbsp;<button id="shutterCorrection" name="shutterCorrection"  value="1" onClick="checkField(this.id,this.value)"> <script>document.write(_sutCrc);</script> </button></td></tr>
+        
+            <tr height="25"><td class="md4" width="30%">&nbsp;&nbsp;背景校正 </td><td class="md2" >&nbsp;&nbsp;<button id="bcgCorrction" name="bcgCorrction"  value="1" onClick="checkField(this.id,this.value)"> <script>document.write(_bcgCrc);</script> </button></td></tr>
+        
+            <tr height="25"><td class="md4" width="30%">&nbsp;&nbsp;数据输出类型 </td><td class="md2" >&nbsp;&nbsp;<select id="dataOutType" style="background-color:#CCC;" onChange="javascript:checkField(this.id,this.value)">
+              <option value="0">温度与图像</option>
+              <option value="1">图像</option>
+              <option value="2">温度</option>
+        
+        </select></td></tr>
+            <tr height="25"><td class="md6" width="30%">&nbsp;&nbsp;扩展温度段测温</td><td class="md6" >&nbsp;&nbsp;<input type="checkbox" name="extendTemp" value="extendTemp"   onclick="checkField(this.value,this.checked)" id="extendTemp" /></td></tr>
+        
+         </table></td></tr></table>
+
+    </div>
+</div>
+<div class="gredColor" onselectstart="return false;" style="left:0px;top:576px;width:768px; height:50px; background-color:#CCC; position:absolute; float:left;">
+	<div style="left:30px;width:30px;height:30px;top:10px;position:absolute;background-color:white;text-align:center;">
+		<img id="playPause" title="pause" name="pause" src="./images/pause.png"/ ondragstart="return false;" onclick="videoControl()">
+	</div>
+	<div style="left:80px;width:30px;height:30px;top:10px;position:absolute;background-color:white;text-align:center;">
+		<img title="snapshot" id="snapshot"  src="./images/snapshot.png"/ ondragstart="return false;" onclick="snapShot(this.id)">
+	</div>
+	<div style="left:600px;width:30px;height:30px;top:10px;position:absolute;background-color:white;text-align:center;">
+		<img title="spot hide" id="showHide" name="show" src="./images/spotHide.png"/ ondragstart="return false;" onclick="hideBoxSpotLine()">
+	</div>
+	<div style="left:650px;width:30px;height:30px;top:10px;position:absolute;background-color:white;text-align:center;">
+		<img title="full screen" src="./images/pipResize.png"/ ondragstart="return false;" onclick="imageScreen()">
+	</div>
+</div>
+<div id="saveFlag" style="height:30px;width:200px;position:fixed;left:130px;top:590px;z-index:11;box-shadow:2px 2px 1px #CCC;display:none;">Saving...
+</div>
+</body>
+</html>
+<script type="text/javascript" src="rowscolor.js"></script>

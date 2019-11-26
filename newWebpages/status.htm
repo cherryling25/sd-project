@@ -1,0 +1,346 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="date" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="0">
+<link rel="stylesheet" href="app.css" tppabs="http://192.168.100.2:8080/app.css">
+<link rel="stylesheet" href="tempStyle.css" tppabs="http://192.168.100.2:8080/tempStyle.css">
+<link rel="stylesheet" href="style.css" tppabs="http://192.168.100.2:8080/style.css" type="text/css">
+<title>ShiDe</title>
+<script src="get_param.cgi" tppabs="http://192.168.100.2:8080/get_param.cgi"></script>
+<script type="text/javascript" src="jquery.min.js" tppabs="http://192.168.100.2:8080/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="public.js" tppabs="http://192.168.100.2:8080/public.js"></script>
+<script src="appver.js" tppabs="http://192.168.100.2:8080/appver.js"></script>
+<style type="text/css">
+select{
+	left:200px;
+	width:250px;
+	height:30px;
+	border-radius:4px;
+	-web-kit-appearance:none;
+	-moz-appearance: none;
+	border:1px solid #c8cccf;
+	padding:0 0 0 20%;
+	position:absolute;
+}
+select option{
+	padding:0 0 0 25%;
+}
+</style>
+
+<script>
+
+
+function d1(msg)
+{
+$("#alarm_status_info").html("&nbsp;&nbsp;"+msg);
+}
+function d3(msg)
+{
+$("#upnp_status_info").html("&nbsp;&nbsp;"+msg);
+}	
+function d4(msg)
+{
+}	
+function sd(sdtotal){
+$("#sd_status_info").html("&nbsp;&nbsp;"+sdtotal+"MB");
+}
+function sd1(sdtotal){
+$("#sd_status_info1").html("&nbsp;&nbsp;"+sdtotal+"MB");
+}
+function sd2(sdstatus){
+$("#sd_status_info2").html("&nbsp;&nbsp;"+sdstatus);
+}
+function d2(status){
+$("#dns_status_info").html("&nbsp;&nbsp;"+status);
+}
+
+function initValue(){
+	
+	$("#dev_id").val(deviceid);
+	$("#sw_ver").val(sys_ver);
+	$("#alias").val(device_name);
+	$("#dev_status").val(status);
+	
+	if(sd_info == 0)
+		$("#record_sd_info").val('FAILED');
+	else
+		$("#record_sd_info").val('OK');
+	//$("#mac").val(mac.toUpperCase());
+	//$("#wifiMac").val(wifimac.toUpperCase());
+	//$("#aw_ver").val(app_ver);
+	//$("#cpu").val(cpu);
+	//$("#cpuType").val(cputype);
+	//$("#manufacturer").val(manufacturer);
+	//$("#sdk_ver").val(version);
+
+}
+
+function body_onload()
+{
+	setCurrentUrl('..');
+	showLoginName();
+	initValue();
+	if (alarm_status==1)	
+		d1(_motion_alarm);
+	else if (alarm_status==2)
+		d1(_input_alarm);
+	else
+		d1(_none);
+
+	switch (factory_status)
+	{
+		case 0:
+			d2(_ddns_noaction);
+			break;
+		case 1:
+			d2(_ddns_waiting);
+			break;
+		case 2:
+			d2(_ddns_cannotconnect);
+			break;
+		case 22:
+			d2(_factory_ok);
+			break;
+		case 23:
+			d2(_factory_noauth);
+			break;
+		case 24:
+			d2(_factory_noid);
+			break;
+		case 25:
+			d2(_factory_over);
+			break;
+		case 26:
+			d2(_factory_iddisable);
+			break;
+		case 27:
+			d2(_factory_errparam);
+			break;
+		case 28:
+			d2(_factory_unknownerr);
+			break;
+	}
+
+	if (upnp_status==0)
+		d3(_upnp_msg0);
+	else if (upnp_status==1)
+		d3(_upnp_msg1);
+	else if (upnp_status==2)
+		d3(_upnp_msg2);
+	else if (upnp_status==3)
+		d3(_upnp_msg3);
+	else if (upnp_status==4)
+		d3(_upnp_msg4);
+	else if (upnp_status==5)
+		d3(_upnp_msg5);
+
+	if(record_sd_status == 2) 
+		$("#record_sd_info").html("&nbsp;&nbsp;"+_sd_exist);//recording
+	else if(record_sd_status == 1) 
+		$("#record_sd_info").html("&nbsp;&nbsp;"+_disk_4);
+	else if(record_sd_status == 3)
+		$("#record_sd_info").html("&nbsp;&nbsp;"+_disk_3);
+	else if(record_sd_status == 4)
+	    $("#record_sd_info").html("&nbsp;&nbsp;"+_disk_5);
+	else if(record_sd_status == 5)
+	    $("#record_sd_info").html("&nbsp;&nbsp;"+_disk_6);
+	else
+		$("#record_sd_info").html("&nbsp;&nbsp;"+_disk_2);
+		
+	if(deviceid!="")
+			document.getElementById("tr_deviceid").style.display="";
+}
+</script>
+</head>
+<body  onLoad="body_onload()" onContextMenu="return false">
+<div id="head" class="M">
+    <div class="head_nav">
+        <div class="head_nav_box">
+            <!-- ><a href="http://www.infiray.com/">< -->
+            <a href="javascript:if(confirm(%27http://www.infiray.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.infiray.com/%27" tppabs="http://www.infiray.com/">
+                <div class="head_logo">
+                    <div  ><img style="width:158px;height:57px;left:80px;top:-8px;position:absolute;" src="./images/shideit.png" tppabs="http://192.168.100.2:8080/images/shideit.png" alt=""></div>
+                </div>
+                 <!-- ><div class="head_logo_con"><em>For Security</em></div>< -->
+            </a>
+            <div class="head_nav_list">
+				<nav class="nav1">
+					<ul>
+						<li class="head_nav_list_li_z" style="left:54%;">
+							<div class="listCell" style="top:23px;">
+								<a href="temp_messure.htm" tppabs="http://192.168.100.2:8080/temp_messure.htm"><script>document.write(_thermometric);</script></a>
+							</div>
+                        </li>
+                        <li class="head_nav_list_li_z" style="left:60%;">
+                            <!-- ><a href="temp_storage.htm">STORAGE</a>< -->
+                            <div class="listCell" style="top:23px;">
+                            	 <a href="temp_storage.htm" tppabs="http://192.168.100.2:8080/temp_storage.htm"><script>document.write(_storage);</script></a>
+                            </div>
+                        </li>
+                        <li class="head_nav_list_li_z active" style="left:66%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="setupList()"><script>document.write(_settings);</script></a>
+                        	</div>
+                        </li>
+                        <li id="setupList" class="head_nav_list_li_z show" style="left:66%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" >
+                                    <a class="show" href="ip.htm" tppabs="http://192.168.100.2:8080/ip.htm">
+                                        <script>document.write(_Network);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show">
+                                    <a class="show" href="log.htm" tppabs="http://192.168.100.2:8080/log.htm">
+                                        <script>document.write(_log);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" >
+                                    <a class="show" href="upgrade.htm" tppabs="http://192.168.100.2:8080/upgrade.htm">
+                                        <script>document.write(_maintenance);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell4Top show" >
+                                    <a class="show" href="user.htm" tppabs="http://192.168.100.2:8080/user.htm">
+                                        <script>document.write(_user);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell5Top show" >
+                                    <a class="show" href="platform_access.htm" tppabs="http://192.168.100.2:8080/platform_access.htm">
+                                        <script>document.write(_platform);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell6Top show">
+                                    <a class="show" href="status.htm" tppabs="http://192.168.100.2:8080/status.htm">
+                                        <script>document.write(_device);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                         <!-- >
+                        <li class="head_nav_list_li_z" style="left:72%;cursor:pointer;">
+                        	<div class="listCell" style="top:23px;">
+                        		<a onclick="languageList()"><script>document.write(_language);</script></a>
+                        	</div>
+                        </li>
+                        <li id="languageList" class="head_nav_list_li_z show" style="left:72%;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        < -->
+                        <div class="header_tips" style="right:60px;">
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" style="top:13px;" src="./images/loginuser1.png" tppabs="http://192.168.100.2:8080/images/loginuser1.png" ondragstart="return false" ></img>
+                        	</div>
+                        	<div class="relaCell" style="width:100px;top:10px;cursor:default;" id="loginName">
+                        		<script>document.write('');</script>
+                        	</div>
+							<div id="logoutDiv" class="relaCell" style="width:60px;color:#666;top:10px;" onclick="logout()" onmouseover="foucus_header_tips('logoutDiv')" onmouseout="defoucus_header_tips('logoutDiv','#666')">
+								<script>document.write(_logout);</script>
+							</div>
+                        	
+                        </div>
+                        <div class="header_tips" style="right:60px;top:38px;" >
+                        	<div class="relaCell" style="width:100px;cursor:default;" id="loginUserImg">
+                        		<img class="headerImg" src="./images/language1.png" tppabs="http://192.168.100.2:8080/images/language1.png" ondragstart="return false"></img>
+                        	</div>
+							<div id="languageshow" class="relaCell" style="top:0px;" onclick="languageList()" onmouseover="foucus_header_tips('languageshow')" onmouseout="defoucus_header_tips('languageshow')">
+                        		<script>document.write(_language);</script>
+                        	</div>
+                        </div>
+                        <li id="languageList" class="head_nav_list_li_z show" style="right:200px;z-index:9;display:none;">
+                             <div  class="downList show" style="display:inline;">
+                                <div class="listCell cell1Top show" onclick="set_language('1')">
+                                    <a class="show px10_font" style="text-align:left;" href="">
+                                        <script>document.write(_english);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell2Top show" onclick="set_language('2')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_chinese);</script>
+                                    </a>
+                                </div>
+                                <div class="listCell cell3Top show" onclick="set_language('3')">
+                                    <a class="show px10_font" href="">
+                                        <script>document.write(_tchinese);</script>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='center-in-center' style="width:640px;">
+	<div id="devicestatusDiv" class='parentDiv' style="height:240px;top:0px;">
+		<div class='topBotBor'><strong><script>document.write(_devicestatus);</script></div>
+		<div id="devicestatus" style="display:inline;">
+			<div class="childDiv cell0Buck ipCellLeft"><script>document.write(_sw_ver);</script><input  type="text" readonly="readonly" value="" id="sw_ver" class="childValue"/></div>
+			<!-- ><div class="childDiv cell1Buck ipCellLeft"><script>document.write(_aw_ver);</script><input  type="text" readonly="readonly" value="" id="aw_ver" class="childValue"/></div>< -->
+			<!-- ><div class="childDiv cell2Buck ipCellLeft"><script>document.write(_sdk_ver);</script><input  type="text" readonly="readonly" value="" id="sdk_ver" class="childValue"/></div>< -->
+			<div class="childDiv cell1Buck ipCellLeft"><script>document.write(_alias);</script><input  type="text" readonly="readonly" value="" id="alias" class="childValue"/></div>
+			<div class="childDiv cell2Buck ipCellLeft"><script>document.write(dev_status);</script><input  type="text" readonly="readonly" value="" id="dev_status" class="childValue"/></div>
+			<div class="childDiv cell3Buck ipCellLeft"><script>document.write(_dev_id);</script><input  type="text" readonly="readonly" value="" id="dev_id" class="childValue"/></div>
+			<!-- ><div class="childDiv cell7Buck ipCellLeft"><script>document.write(_alarmstatus);</script><input  type="text" readonly="readonly" value="" id="alarm_status_info" class="childValue"/></div>
+			<!-- ><div class="childDiv cell7Buck ipCellLeft"><script>document.write(_upnp_status);</script><input  type="text" readonly="readonly" value="" id="upnp_status_info" class="childValue"/></div>< -->
+			<!-- ><div class="childDiv cell6Buck ipCellLeft"><script>document.write(_manufacturer);</script><input  type="text" readonly="readonly" value="" id="manufacturer" class="childValue"/></div>< -->
+			<!-- ><div class="childDiv cell11Buck ipCellLeft"><script>document.write(_ddns_status);</script><input  type="text" readonly="readonly" value="" id="dns_status_info" class="childValue"/></div>< -->
+			<div class="childDiv cell4Buck ipCellLeft"><script>document.write(_record_sd_status);</script><input  type="text" readonly="readonly" value="" id="record_sd_info" class="childValue"/></div>
+			<!-- ><div class="childDiv cell11Buck ipCellLeft">CPU<input readonly="readonly"  type="text" value="" id="cpu" class="childValue"/></div>
+			<div class="childDiv cell12Buck ipCellLeft">CPU TYPE<input readonly="readonly"  type="text" value="" id="cpuType" class="childValue"/></div>< -->
+			<!-- ><div class="childDiv cell8Buck ipCellLeft">MODEL<input readonly="readonly" type="text" value="" id="model" class="childValue"/></div>
+			<div class="childDiv cell9Buck ipCellLeft">MAC<input readonly="readonly" type="text" value="" id="mac" class="childValue"/></div>
+			<div class="childDiv cell10Buck ipCellLeft">WiFi MAC<input readonly="readonly" type="text" value="" id="wifiMac" class="childValue"/></div>
+			<div class="childDiv cell5Buck ipCellLeft"><script>document.write(_language);</script><select id="mode_sel" onChange="javascript:set_language()">
+				<option style="text-align:center;" value="1">
+					<script>document.write(_english);</script>
+				</option>
+				<option value="2">
+					<script>document.write(_chinese);</script>
+				</option>
+				<option value="3">
+					<script>document.write(_tchinese);</script>
+				</option>
+			</select></div>< -->
+		</div>
+		<!-- 按钮top=40*(getNumber(cell12Buck)+2)+10 -->
+		<!-- >
+		<div id="refresh" class="childDiv" style="width:100%;top:540px;height:60px;" align="center" >
+			<button class="childBut" id="reload" onClick="location.reload()"> <script>document.write(_refresh);</script> </button>
+		</div>< -->
+	</div>
+</div>
+<div class="buttomTip" style="">
+	<div class="bottomFont" style=""><strong>ShiDe Technologies Co., Ltd.</strong></div><br/>
+</div>
+</body>
+</html><script>
+removeSelfClass();$("#dd-status", parent.document).addClass("selected");
+if(language=="simple_chinese")
+	$("#mode_sel").val(2);	
+else if(language=="traditional_chinese")
+	$("#mode_sel").val(3);		
+else
+	$("#mode_sel").val(1);	
+
+</script>
+<script type="text/javascript" src="rowscolor.js" tppabs="http://192.168.100.2:8080/rowscolor.js"></script>

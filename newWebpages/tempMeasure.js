@@ -535,6 +535,8 @@ var plateFlag = {
 	'IOValidDiv':'false',
 };
 
+
+	
 function submitDate(id,val){
 	var cmd,param;
 	var error = false;

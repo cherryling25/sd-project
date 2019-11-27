@@ -1568,19 +1568,20 @@
 					<div class="envirButton show" id="envirButtonPlate" onclick="showValue('envirDivPlate',0)"><font class="envirFont show"><script>document.write(_submit);</script></font></div>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_reflectivity);</script><input class="envirRight show" id="envirReflectPlate" type="number" />
+						<span class="value">0</span>
+					<script>document.write(_reflectivity);</script><input class="envirRight show" id="envirReflectPlate" type="range" name="range" value="0"/>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_airTemp);</script><input class="envirRight show" id="envirAirTemPlate" type="number" />
+					<script>document.write(_airTemp);</script><input class="envirRight show" id="envirAirTemPlate" type="range" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_targetTemp);</script><input class="envirRight show" id="envirTargetTempPlate" type="number" />
+					<script>document.write(_targetTemp);</script><input class="envirRight show" id="envirTargetTempPlate" type="range" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_atmosTrans);</script><input class="envirRight show" id="envirAtmosTransPlate" type="number" />
+					<script>document.write(_atmosTrans);</script><input class="envirRight show" id="envirAtmosTransPlate" type="range" />
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_distance);</script><input class="envirRight show" id="envirDisPlate" type="number" />
+					<script>document.write(_distance);</script><input class="envirRight show" id="envirDisPlate" type="range" />
 				</div>
 				<div class='envirSubDiv show'>
 					<div class="envirDiv envirExternal show"><script>document.write(_infraredWindow);</script></div>

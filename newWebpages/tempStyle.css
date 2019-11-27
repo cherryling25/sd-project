@@ -520,6 +520,9 @@
 .envirDiv span{
 	margin-left: 10px;
 }
+.envirDiv .alone{
+	margin-left: 0px;
+}
 .algorDiv{
 	padding-top:10px;
 	width:300px;
@@ -840,6 +843,21 @@ input[type=range]::-webkit-slider-thumb {
 	-o-transform: translate(-50%);
 	transform: translate(-50%);
 }
+.border{
+	height: 600px;
+	width: 1px;
+	background: #3b4547;
+	position: absolute;
+	margin-left: -1px;
+}
+.border1{
+	height: 600px;
+	width: 1px;
+	background: #3b4547;
+	position: absolute;
+	margin-left: 1131px;
+	top: 8px;
+}
 /*
 .firstDiv{
 	width:768px; 
@@ -869,13 +887,13 @@ input[type=range]::-webkit-slider-thumb {
 }
 */
 .secondDiv{
-	left:180px;
+	left:152px;
 	width:50px;
 	height:360px;
-	top:-200px;
+	top:-203px;
 	padding:0px 0px 0px 5px;
 	position:absolute;
-	transform: rotateZ(90deg);
+	transform: rotateZ(-90deg);
 }
 
 .headIcon{

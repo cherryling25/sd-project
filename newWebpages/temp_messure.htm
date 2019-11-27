@@ -119,6 +119,7 @@
 <!-- iconDiv-->
 
 <div id="pageHead" class='center-in-center'>
+		<div class="border"></div>
 		<!--修改的 -->
 <div class="secondDiv" style="" >
 		<img id="hotImg" class="secondeImg" style='' src="./images/ironhot.bmp" tppabs="http://192.168.100.2:8080/images/ironhot.bmp" /><br/>
@@ -1535,9 +1536,9 @@
         < -->
     </div>
 
-<!--boxPlane				修改的 原来是sixDiv-->
+
 <div id="canvasSet" class="thirdDiv">
-		<!--修改的 boxPlane 上部分-->
+		<!--修改的 boxPlane -->
 	<div class="headIcon">
 		<div class="iconCell iconCell6Left">
 			<img id="imgAutoShut" src="./images/autoFocusCalibratel.png" tppabs="http://192.168.100.2:8080/images/autoFocusCalibratel.png" onclick="showPlate('autoCorrection')" ondragstart="return false" onmouseover="showFocus(this,'autoFocusCalibratel')" onmouseout="showBlur(this,'autoFocusCalibratel')"/>
@@ -1568,13 +1569,13 @@
 					<div class="envirButton show" id="envirButtonPlate" onclick="showValue('envirDivPlate',0)"><font class="envirFont show"><script>document.write(_submit);</script></font></div>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_reflectivity);</script> <span id="envirReflectPlateText">0x</span> <input class="envirRight show" id="envirReflectPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirReflectPlate','envirReflectPlateText')"/>
+					<script>document.write(_reflectivity);</script> <span id="envirReflectPlateText">0</span> <input class="envirRight show" id="envirReflectPlate" value="-100"  type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirReflectPlate','envirReflectPlateText')"/>
 				</div>
 				<div class="envirDiv show">
 					<script>document.write(_airTemp);</script><span id="temPlateText">0</span> <input class="envirRight show" id="envirAirTemPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirAirTemPlate','temPlateText')"/>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_targetTemp);</script><span id="targetTempPlateText">0</span> <input class="envirRight show" id="envirTargetTempPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirTargetTempPlate','targetTempPlateText')"/>
+					<script>document.write(_targetTemp);</script><span class="alone" id="targetTempPlateText">0</span> <input class="envirRight show" id="envirTargetTempPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirTargetTempPlate','targetTempPlateText')"/>
 				</div>
 				<div class="envirDiv show">
 					<script>document.write(_atmosTrans);</script><span id="atmosTransPlateText">0</span> <input class="envirRight show" id="envirAtmosTransPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirAtmosTransPlate','atmosTransPlateText')"/>
@@ -1597,7 +1598,6 @@
 		</div>		
 	</div>
 
-	<!-- 修改后的 boxPanel-->
 		<div class="fivePanel">
 			<div class="curveOption">
 				<div id="curveMeasureSet" class="curveSettings curveSetFocus" onselectstart="return false;" onclick="curvePageControl(this)">
@@ -1701,15 +1701,13 @@
 </div>
 
 
-<!--sixDiv 原来放在这 12293899888883838388383383883838383838383-->
-
-
 <div id="curveDiv" class="fiveDiv" style="display:inline;">
 	<div>
 		<!-- ><div class="curveOption" style="width:800px;"><strong>&nbsp;&nbsp;WAVEFORM:</strong>< -->
 		<canvas id="drawing" width=1010 height=200 >A drawing of something.</canvas>
 	</div>
 </div>
+<div class="border1"></div>
 </div>
 
 

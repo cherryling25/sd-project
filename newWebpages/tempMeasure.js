@@ -536,7 +536,20 @@ var plateFlag = {
 };
 
 //滑动条
- function envirReflectPlateChange(numId,textId){ 
+
+
+/* $(document).ready(function() {
+	$('#envirReflectPlate').val() = $('#envirReflectPlateText').text();
+})
+
+ */
+function nochange(){
+		var num=document.getElementById(numId); 
+	      var text =document.getElementById(textId); 
+	      text.valuet=num.defaultValue; 
+}
+
+function envirReflectPlateChange(numId,textId){ 
 	      var num=document.getElementById(numId); 
 	      var text =document.getElementById(textId); 
 	      text.innerText=num.value ; 

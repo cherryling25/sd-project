@@ -537,12 +537,6 @@ var plateFlag = {
 
 //滑动条
 
-
-/* $(document).ready(function() {
-	$('#envirReflectPlate').val() = $('#envirReflectPlateText').text();
-})
-
- */
 function nochange(){
 		var num=document.getElementById(numId); 
 	      var text =document.getElementById(textId); 
@@ -803,6 +797,7 @@ function rangeNumConect(obj){
 }
 
 function hidePlate(){
+	
 	plateObj[0] = document.getElementById('tempNamePlate');
 	plateObj[1] = document.getElementById('colorPlate');
 	plateObj[2] = document.getElementById('videomodel');

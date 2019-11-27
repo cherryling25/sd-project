@@ -119,7 +119,6 @@
 <!-- iconDiv-->
 
 <div id="pageHead" class='center-in-center'>
-		<div class="border"></div>
 		<!--修改的 -->
 <div class="secondDiv" style="" >
 		<img id="hotImg" class="secondeImg" style='' src="./images/ironhot.bmp" tppabs="http://192.168.100.2:8080/images/ironhot.bmp" /><br/>
@@ -1483,7 +1482,7 @@
 		</div>
 		<div class="iconCell iconCell11Left">
 			<img id="imgVideoRecord" src="./images/video.png" tppabs="http://192.168.100.2:8080/images/video.png" ondragstart="return false" onclick="showPlate('videoRecord')" onmouseover="showFocus(this,'video')" onmouseout="showBlur(this,'video')"/>
-			<div id="videoRecord" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
+			<div id="videoRecord" class="downDemo show" style="left:-200px;height:30px;padding:10px 0px 0px 10px;">
 				<div class=" show"></div><script>document.write(_record);</script>:
 				<select id="videoRecordSelect" class="show" style="width:70px;color:#666;right:5px;top:12px;position:absolute;" name="videoRecord" onchange="showValue('videoRecord',this.value)">
 					<option class="show" value="0"><script>document.write(_infrared);</script></option>
@@ -1495,7 +1494,7 @@
 		</div>
         <div class="iconCell iconCell3Left">
              <img id="imgDirection" src="./images/imageDistance.png" tppabs="http://192.168.100.2:8080/images/imageDistance.png" ondragstart="return false" onclick="showPlate('direction')" onmouseover="showFocus(this,'imageDistance')" onmouseout="showBlur(this,'imageDistance')"/>
-             <div id="direction" class="downDemo show" style="left:-20px;height:60px;padding:10px 0px 0px 10px;width:120px;">
+             <div id="direction" class="downDemo show" style="left:-200px;height:60px;padding:10px 0px 0px 10px;width:120px;">
                 <div class="show"></div>
                 <input class="show" id="horizontal" type="checkbox" value="0" onclick="showValue('direction',this.value)" /><label class="show" for="horizontal">&nbsp;&nbsp;<script>document.write(_horizontal);</script></label><br/>
                 <input class="show" id="vertical" type="checkbox" value="0" onclick="showValue('direction',this.value)" /><label class="show" for="vertical">&nbsp;&nbsp;<script>document.write(_vertical);</script></label>
@@ -1569,7 +1568,7 @@
 					<div class="envirButton show" id="envirButtonPlate" onclick="showValue('envirDivPlate',0)"><font class="envirFont show"><script>document.write(_submit);</script></font></div>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_reflectivity);</script> <span id="envirReflectPlateText">0</span> <input class="envirRight show" id="envirReflectPlate" value="-100"  type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirReflectPlate','envirReflectPlateText')"/>
+					<script>document.write(_reflectivity);</script> <span id="envirReflectPlateText">0</span> <input class="envirRight show" id="envirReflectPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirReflectPlate','envirReflectPlateText')"/>
 				</div>
 				<div class="envirDiv show">
 					<script>document.write(_airTemp);</script><span id="temPlateText">0</span> <input class="envirRight show" id="envirAirTemPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirAirTemPlate','temPlateText')"/>
@@ -1707,7 +1706,7 @@
 		<canvas id="drawing" width=1010 height=200 >A drawing of something.</canvas>
 	</div>
 </div>
-<div class="border1"></div>
+
 </div>
 
 

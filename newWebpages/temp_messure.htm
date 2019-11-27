@@ -1568,20 +1568,19 @@
 					<div class="envirButton show" id="envirButtonPlate" onclick="showValue('envirDivPlate',0)"><font class="envirFont show"><script>document.write(_submit);</script></font></div>
 				</div>
 				<div class="envirDiv show">
-						<span class="value">0</span>
-					<script>document.write(_reflectivity);</script><input class="envirRight show" id="envirReflectPlate" type="range" name="range" value="0"/>
+					<script>document.write(_reflectivity);</script> <span id="envirReflectPlateText">0x</span> <input class="envirRight show" id="envirReflectPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirReflectPlate','envirReflectPlateText')"/>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_airTemp);</script><input class="envirRight show" id="envirAirTemPlate" type="range" />
+					<script>document.write(_airTemp);</script><span id="temPlateText">0</span> <input class="envirRight show" id="envirAirTemPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirAirTemPlate','temPlateText')"/>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_targetTemp);</script><input class="envirRight show" id="envirTargetTempPlate" type="range" />
+					<script>document.write(_targetTemp);</script><span id="targetTempPlateText">0</span> <input class="envirRight show" id="envirTargetTempPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirTargetTempPlate','targetTempPlateText')"/>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_atmosTrans);</script><input class="envirRight show" id="envirAtmosTransPlate" type="range" />
+					<script>document.write(_atmosTrans);</script><span id="atmosTransPlateText">0</span> <input class="envirRight show" id="envirAtmosTransPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirAtmosTransPlate','atmosTransPlateText')"/>
 				</div>
 				<div class="envirDiv show">
-					<script>document.write(_distance);</script><input class="envirRight show" id="envirDisPlate" type="range" />
+					<script>document.write(_distance);</script><span id="envirDisPlateText">0</span> <input class="envirRight show" id="envirDisPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirDisPlate','envirDisPlateText')"/>
 				</div>
 				<div class='envirSubDiv show'>
 					<div class="envirDiv envirExternal show"><script>document.write(_infraredWindow);</script></div>

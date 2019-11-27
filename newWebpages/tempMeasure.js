@@ -535,6 +535,12 @@ var plateFlag = {
 	'IOValidDiv':'false',
 };
 
+//滑动条
+ function envirReflectPlateChange(numId,textId){ 
+	      var num=document.getElementById(numId); 
+	      var text =document.getElementById(textId); 
+	      text.innerText=num.value ; 
+}
 
 	
 function submitDate(id,val){

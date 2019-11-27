@@ -517,6 +517,9 @@
 	text-align:left;
 	vertical-align:middle;
 }
+.envirDiv span{
+	margin-left: 10px;
+}
 .algorDiv{
 	padding-top:10px;
 	width:300px;
@@ -551,9 +554,6 @@ input[type=range]::-webkit-slider-runnable-track {
     height: 5px;
     border-radius: 10px; 
     box-shadow: 0 1px 1px #0d1112, inset 0 .11em .11em #0d1112; 
-}
-input[type=range]:focus {
-    outline: none;
 }
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;

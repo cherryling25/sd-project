@@ -21,7 +21,7 @@
     <!--<![endif]-->
    
 </head>
-<body onLoad=" body_onload()" onContextMenu="return false">
+<body onLoad="body_onload()" onContextMenu="return false">
 <!--[if lte IE 9]>
 <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
         href="javascript:if(confirm(%27http://browsehappy.com/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://browsehappy.com/%27" tppabs="http://browsehappy.com/" target="_blank">升级浏览器</a>
@@ -1474,6 +1474,125 @@
 
 <!-- 修改的-->
 <div  class="iconDiv">
+	<div style="display: none"><!--隐藏-->
+		<div class="iconCell iconCell0Left">
+				<img id="imgVideoMode" src="./images/ImageMode.png" tppabs="http://192.168.1.10:80/images/ImageMode.png" ondragstart="return false" onclick="showPlate('videomodel')" onmouseover="showFocus(this,'ImageMode')" onmouseout="showBlur(this,'ImageMode')" />
+				<div id="videomodel" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
+					<div class="arrowDemo show"></div><script>document.write(_model);</script>:
+					<select id="videoSelect" class="show" style="width:80px;color:#666;right:10px;top:12px;position:absolute;" name="videomodel" onchange="showValue('videomodel',this.value);">
+						<option class="show" value="0"><script>document.write(_infrared);</script></option>
+						<option class="show" value="1"><script>document.write(_visible);</script></option>
+						<option class="show" value="2"><script>document.write(_fuse);</script>1</option>
+						<option class="show" value="3"><script>document.write(_fuse);</script>2</option>
+						<option class="show" value="4"><script>document.write(_fuse);</script>3</option>
+						<option class="show" value="5"><script>document.write(_fuse);</script>4</option>
+						<!-- >
+						<option class="show" value="6"><script>document.write(_fuse);</script>5</option>
+						<option class="show" value="7"><script>document.write(_fuse);</script>6</option>
+						<option class="show" value="8"><script>document.write(_fuse);</script>7</option>
+						<option class="show" value="9"><script>document.write(_fuse);</script>8</option>
+						<option class="show" value="10"><script>document.write(_fuse);</script>9</option>
+						<option class="show" value="11"><script>document.write(_fuse);</script>10</option>
+						<option class="show" value="12"><script>document.write(_fuse);</script>11</option>
+						<option class="show" value="13"><script>document.write(_fuse);</script>12</option>
+						<option class="show" value="14"><script>document.write(_fuse);</script>13</option>
+						<option class="show" value="15"><script>document.write(_fuse);</script>14</option>
+						<option class="show" value="16"><script>document.write(_fuse);</script>15</option>
+						<option class="show" value="17"><script>document.write(_fuse);</script>16</option>
+						<option class="show" value="18"><script>document.write(_fuse);</script>17</option>
+						<option class="show" value="19"><script>document.write(_fuse);</script>18</option>
+						<option class="show" value="20"><script>document.write(_fuse);</script>19</option>
+						<option class="show" value="21"><script>document.write(_fuse);</script>20</option>
+						<option class="show" value="22"><script>document.write(_fuse);</script>21</option>
+						<option class="show" value="23"><script>document.write(_fuse);</script>22</option>
+						<option class="show" value="24"><script>document.write(_fuse);</script>23</option>
+						<option class="show" value="25"><script>document.write(_fuse);</script>24</option>
+						< -->
+					</select>
+				</div>
+			</div>
+			<div class="iconCell iconCell1Left">
+					<img id="imgFinetuning" name=""  src="./images/finetuning.png" tppabs="http://192.168.1.10:80/images/finetuning.png" ondragstart="return false" onclick="showPlate('finetuning')" onmouseover="showFocus(this,'finetuning')" onmouseout="showBlur(this,'finetuning')"/>
+					<div id="finetuning" class="downDemo show" style="left:-20px;height:100px;width:260px;padding:10px 0px 0px 10px;">
+						<div class="arrowDemo show"></div>
+						<label class="show" style="position:absolute;top:6px;" for="leftRight"><script>document.write(_leftOffset);</script>:&nbsp;&nbsp;</label>
+						<input class="show" style="width:140px;position:absolute;left:60px;" type="range" id="offsetXRange" step="2"  max="480" value="0" onchange="showValue('finetuning',this);"/>
+						<input class="show" style="width:50px;position:absolute;right:5px;border:1px solid;" type="text" id="leftRight"  value="0" onchange="showValue('finetuning',this);"/><br/>
+						<label class="show" style="position:absolute;top:32px;" for="topButtom"><script>document.write(_topOffset);</script>:&nbsp;&nbsp;</label>
+						<input class="show" style="width:140px;position:absolute;left:60px;" type="range" id="offsetYRange" step="2" max="360" value="0" onchange="showValue('finetuning',this);"/>
+						<input class="show" style="width:50px;position:absolute;right:5px;border:1px solid;" type="text" id="topButtom"  value="0" onchange="showValue('finetuning',this);"/><br/>
+						<label class="show" style="position:absolute;top:58px;" for="zoomX"><script>document.write(_zoomX);</script>:&nbsp;&nbsp;</label>
+						<input class="show" style="width:140px;position:absolute;left:60px;" type="range" id="zoomXRange" step="2" max="480" value="0" onchange="showValue('finetuning',this);"/>
+						<input class="show" style="width:50px;position:absolute;right:5px;border:1px solid;" type="text" id="zoomX" max="240"  onchange="showValue('finetuning',this);"/><br/>
+						<label class="show" style="position:absolute;top:84px;" for="zoomY"><script>document.write(_zoomY);</script>:&nbsp;&nbsp;</label>
+						<input class="show" style="width:140px;position:absolute;left:60px;" type="range" id="zoomYRange" step="2" max="360" value="0" onchange="showValue('finetuning',this);"/>
+						<input class="show" style="width:50px;position:absolute;right:5px;border:1px solid;" type="text" id="zoomY" max="180" onchange="showValue('finetuning',this);" />
+						<!-- ><div class="listSumbit show" value="0" style="" onclick="showValue('finetuning',this.value);">Sumbit</div>< -->
+					</div>
+				</div>
+				<div class="iconCell iconCell2Left" style="display:none;">
+					<img id="imgDistance" src="./images/ParametersDistance.png" tppabs="http://192.168.1.10:80/images/ParametersDistance.png" ondragstart="return false" onclick="showPlate('distance')" onmouseover="showFocus(this,'ParametersDistance')" onmouseout="showBlur(this,'ParametersDistance')"/>
+					<div id="distance" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
+						<div class="arrowDemo show"></div>
+						<input id="distanceRange" class="show" style="width:130px;" type="range" id="distance" max="120" value="0" onclick="showValue('distance',this.value)" />
+						<p class="show" id="distanceText" style="display:inline;position:absolute;top:10px;right:5px;"></p>
+					</div>
+				</div>
+				<div class="iconCell iconCell2Left">
+					<img id="imgLight" src="./images/lighting.png" tppabs="http://192.168.100.2:8080/images/lighting.png" ondragstart="return false" onclick="showPlate('lighting')" onmouseover="showFocus(this,'lighting')" onmouseout="showBlur(this,'lighting')"/>
+					<div id="lighting" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
+						<div class="arrowDemo show"></div><script>document.write(_lighting);</script>:
+						<select id="lightingSelect" class="show" style="width:60px;color:#666;right:5px;top:12px;position:absolute;" name="lighting" onchange="showValue('lighting',this.value)">
+							<option class="show" value="0"><script>document.write(_off);</script></option>
+							<option class="show" value="1"><script>document.write(_on);</script></option>
+						</select>
+					</div>
+				</div>
+		<div class="iconCell iconCell8Left">
+				<img id="waveform" name="hide" src="./images/tempCurve.png" tppabs="http://192.168.100.2:8080/images/tempCurve.png" ondragstart="return false" onclick="optionWaveform()" onmouseover="showFocus(this,'tempCurve')" onmouseout="showBlur(this,'tempCurve')"/>
+			</div>
+			<div class="iconCell iconCell9Left">
+				<img id="imgTempArea" src="./images/temp.png" tppabs="http://192.168.100.2:8080/images/temp.png" ondragstart="return false" onclick="showPlate('tempSection')" onmouseover="showFocus(this,'temp')" onmouseout="showBlur(this,'temp')"/>
+				<div id="tempSection" class="downDemo show" style="left:-20px;height:60px;padding:10px 0px 0px 10px;">
+					<div class="arrowDemo show"></div><script>document.write(_tempSection);</script>:
+					<select id="tempSectionSelect" class="show" style="width:80px;color:#666;right:10px;top:12px;position:absolute;" name="tempSection" onchange="showValue('tempSection',this.value)">
+						<option class="show" value="0"><script>document.write(_normal);</script></option>
+						<option class="show" value="1"><script>document.write(_extension);</script></option>
+					</select>
+					<div class="show" style="width:80px;color:#666;left:10px;top:38px;position:absolute;"><script>document.write(_tempTracking);</script>:</div>
+					<select id="mouseTempSelect" class="show" style="width:80px;color:#666;right:10px;top:42px;position:absolute;" name="mouseTempSelect" onchange="show_mouse_tool(this.value)">
+						<option class="show" value="1"><script>document.write(_on);</script></option>
+						<option class="show" value="0"><script>document.write(_off);</script></option>
+					</select>
+				</div>
+			</div>
+			<div class="iconCell iconCell10Left">
+				<img id="imgAnalogVideo" src="./images/analogVideo.png" tppabs="http://192.168.100.2:8080/images/analogVideo.png" ondragstart="return false" onclick="showPlate('analogVideo')" onmouseover="showFocus(this,'analogVideo')" onmouseout="showBlur(this,'analogVideo')"/>
+				<div id="analogVideo" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
+					<div class="arrowDemo show"></div><script>document.write(_analogVideoOut);</script>:
+					<select id="analogVideoSelect" class="show" style="width:80px;color:#666;right:10px;top:12px;position:absolute;" name="analogVideo" onchange="showValue('analogVideo',this.value)">
+						<option class="show" value="0"><script>document.write(_off);</script></option>
+						<option class="show" value="2"><script>document.write('PAL');</script></option>
+						<option class="show" value="3"><script>document.write('NTSC');</script></option>
+					</select>
+				</div>
+			</div>
+	
+		<div class="iconCell iconCell12Left" style="">
+				<img id="tempName" name="celsius" src="./images/tempConvert.png" tppabs="http://192.168.100.2:8080/images/tempConvert.png" ondragstart="return false" onclick="showPlate('tempNamePlate')" onmouseover="showFocus(this,'tempConvert')" onmouseout="showBlur(this,'tempConvert')"/>
+				<div id="tempNamePlate" class="downDemo show" style="left:-20px;height:120px;width:60px;">
+					<div class="arrowDemo"></div>
+					<input class="show" type="radio" name="tempName" id="celsius" value="0" onchange="setTempName(this)"/><label class="show" for="celsius">&nbsp;&nbsp;&nbsp;&nbsp;<script>document.write(_celsius);</script></label><br/>
+					<input class="show" type="radio" name="tempName" id="fahrenheit" value="1" onchange="setTempName(this)"/><label class="show" for="fahrenheit">&nbsp;&nbsp;&nbsp;&nbsp;<script>document.write(_fahrenheit);</script></label><br/>
+					<input class="show" type="radio" name="tempName" id="rankine" value="2" onchange="setTempName(this)"/><label class="show" for="rankine">&nbsp;&nbsp;&nbsp;&nbsp;<script>document.write(_rankine);</script></label><br/>
+					<input class="show" type="radio" name="tempName" id="reaumur" value="3" onchange="setTempName(this)"/><label class="show" for="reaumur">&nbsp;&nbsp;&nbsp;&nbsp;<script>document.write(_reaumur);</script></label><br/>
+					<input class="show" type="radio" name="tempName" id="absolute" value="4" onchange="setTempName(this)"/><label class="show" for="absolute">&nbsp;&nbsp;&nbsp;&nbsp;<script>document.write(_absolute);</script></label>
+				</div>
+		</div>
+	
+	</div><!--隐藏-->
+
+
 		<div class="iconCell iconCell5Left">
 			<img id="shutterCorrection" name="shutterCorrection"  src="./images/shutterCorrection.png" tppabs="http://192.168.100.2:8080/images/shutterCorrection.png" ondragstart="return false" onClick="checkField(this.id,1)" onmouseover="showFocus(this,'shutterCorrection')" onmouseout="showBlur(this,'shutterCorrection')" />
 		</div>

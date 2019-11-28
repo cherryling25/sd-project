@@ -797,7 +797,6 @@ function rangeNumConect(obj){
 }
 
 function hidePlate(){
-	
 	plateObj[0] = document.getElementById('tempNamePlate');
 	plateObj[1] = document.getElementById('colorPlate');
 	plateObj[2] = document.getElementById('videomodel');

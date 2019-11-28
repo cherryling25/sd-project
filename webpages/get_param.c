@@ -10,8 +10,7 @@
 int main(void)
 {
 
-	int i,flags,cli_fd;
-	
+	int i,flags,cli_fd;	
 	flags= 0;
 	i=1;
 
@@ -34,15 +33,7 @@ int main(void)
 		{
 	//	printf("connect succ \n");
 		}
-#if 0
-	fd_set rset;
-	int maxfd;
-	struct timeval tout;
-	char buf[BUFSIZ+1024];
-	int ret = -1;
-#endif	
-	while (1)
-		{
+
 		char buf[9192]="get_param.cgi ";	//保持最够大的BUFFER	
 		
 #if 1
@@ -58,26 +49,35 @@ int main(void)
 		else
 			{		
 		//	printf("write succ2<br> \n");
-			}
-
-		i=read(cli_fd, buf, sizeof(buf));
-		if(i==-1)
-			{
-		//	printf("read fail<br> \n");
-			}
-		else if(i==0)
-			{
-		//	printf("read succ<br> \n");
-			}
-		else
-			{
-			i--;
-			printf("%s ",buf);		
-			break;
-		}
-		sleep(1);
-//	close(cli_fd);
 #endif
-	} 
+			i=4;
+			while (1)
+			{
+			i=read(cli_fd, buf, sizeof(buf));
+			if(i==-1)
+				{
+			//	printf("read fail<br> \n");
+				}
+			else if(i==0)
+				{
+			//	printf("read succ<br> \n");
+				}
+			else
+				{
+				i--;
+				printf("%s ",buf);		
+				break;
+				}
+			usleep(1000);
+			i--;
+			if(i<0)
+				{
+				break;
+				}
+
+			}
+		} 
+	
+	close(cli_fd);	
 
 }

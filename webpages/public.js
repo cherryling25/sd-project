@@ -261,10 +261,7 @@ var PRI_ADMINISTRATOR=255;
 function setupList(){
 	//alert('00');
 	var obj = document.getElementById('setupList');
-	
 	obj.style.display = 'block';
-	
-	
 }
 
 function hideSetup(){

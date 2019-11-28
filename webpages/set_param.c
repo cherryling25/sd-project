@@ -86,6 +86,7 @@ int main(void)
        	char *name;
         	char *city;
 	//char * setdate;
+	int n=0;
         	pParam = getenv("QUERY_STRING");	//调用的库函数
 
 //	printf("pParam is %s<br>\n",pParam);
@@ -108,21 +109,21 @@ int main(void)
 //	printf("pStr2 is %s<br>\n",pStr);
 #endif	
 	
-#if 1
+
 	int i,flags,cli_fd;	
 	flags= 0;
 	i=1;
 	cli_fd=socket(AF_LOCAL, SOCK_STREAM, 0);
-	struct sockaddr_un cli_addr;
-	cli_addr.sun_family=AF_LOCAL;
-	strcpy(cli_addr.sun_path, "/tmp/set.param");
-	unlink("/tmp/set.param");
-	bind(cli_fd, (struct sockaddr *)&cli_addr, sizeof(cli_addr));
+//	struct sockaddr_un cli_addr;
+//	cli_addr.sun_family=AF_LOCAL;
+//	strcpy(cli_addr.sun_path, "/tmp/set.param");
+//	unlink("/tmp/set.param");
+//	bind(cli_fd, (struct sockaddr *)&cli_addr, sizeof(cli_addr));
 	struct sockaddr_un ser_addr;
 	ser_addr.sun_family=AF_LOCAL;
 	strcpy(ser_addr.sun_path, "/tmp/server.socket");      	
-      	fcntl(cli_fd, F_GETFL, &flags);		//获取文件的flags      	
-      	fcntl(cli_fd, F_SETFL, O_NONBLOCK | flags);	//增加文件的某个flags，比如文件是阻塞的，想设置成非阻塞:
+ //     	fcntl(cli_fd, F_GETFL, &flags);		//获取文件的flags      	
+ //    	fcntl(cli_fd, F_SETFL, O_NONBLOCK | flags);	//增加文件的某个flags，比如文件是阻塞的，想设置成非阻塞:
 	i=connect(cli_fd, (struct sockaddr *)&ser_addr, sizeof(ser_addr));
 	if(i==-1)
 		{
@@ -149,36 +150,35 @@ int main(void)
 		else
 			{		
 		//	printf("write succ2<br> \n");
-			}
+			n=50;
+			while (1)
+			{	
 
-	
-	while (1)
-		{	
-		
-#if 1
-		
-
-		i=read(cli_fd, buf, sizeof(buf));
-		if(i==-1)
-			{
-		//	printf("read fail<br> \n");
+			i=read(cli_fd, buf, sizeof(buf));
+			if(i==-1)
+				{
+			//	printf("read fail<br> \n");
+				}
+			else if(i==0)
+				{
+			//	printf("read succ<br> \n");
+				}
+			else
+				{
+				i--;
+				printf("%s ",buf);		
+				break;
+				}
+			usleep(1000);
+			n--;
+			if(n<0)
+				{
+				break;
+				}
+			} 
 			}
-		else if(i==0)
-			{
-		//	printf("read succ<br> \n");
-			}
-		else
-			{
-			i--;
-			printf("%s ",buf);		
-			break;
-		}
-		usleep(1000);
-#endif
-	} 
-
-#endif
-        //	close(cli_fd);
+		close(cli_fd);
+       
 
 #if 0	
 	if(name!=NULL)		//对set_param.cgi的set_cmd给出的命令进行处理

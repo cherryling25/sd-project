@@ -104,6 +104,7 @@ var lineToolID = ['lineButton0'];
 
 //判断该测量工具是否存在
 function is_half_used_tool(id){
+	
 	var tool = document.getElementById(id);
 	var flag = '';
 	
@@ -535,21 +536,6 @@ var plateFlag = {
 	'IOValidDiv':'false',
 };
 
-//滑动条
-
-function nochange(){
-		var num=document.getElementById(numId); 
-	      var text =document.getElementById(textId); 
-	      text.valuet=num.defaultValue; 
-}
-
-function envirReflectPlateChange(numId,textId){ 
-	      var num=document.getElementById(numId); 
-	      var text =document.getElementById(textId); 
-	      text.innerText=num.value ; 
-}
-
-	
 function submitDate(id,val){
 	var cmd,param;
 	var error = false;
@@ -803,8 +789,8 @@ function hidePlate(){
 	plateObj[3] = document.getElementById('lighting');
 	plateObj[4] = document.getElementById('distance');
 	plateObj[5] = document.getElementById('direction');
-	//plateObj[6] = document.getElementById('autoCorrection');
-	//plateObj[7] = document.getElementById('envirDivPlate');
+	plateObj[6] = document.getElementById('autoCorrection');
+	plateObj[7] = document.getElementById('envirDivPlate');
 	plateObj[8] = document.getElementById('finetuning');
 	plateObj[9] = document.getElementById('tempSection');
 	plateObj[10] = document.getElementById('analogVideo');
@@ -2151,12 +2137,60 @@ function sendTempCoor(){
 	param = 'getAllTempCoor';
 	value = boxStr + spotStr + lineStr + mouseStr;
 	
-//	allTempCoorControl(param,value);	//debug 201911
+	allTempCoorControl(param,value);	//debug 201911
 }
 
 function intervalSendCoor(){
 	sendTempCoor();
 	setTimeout(intervalSendCoor,500);
+}
+
+function getpicture()
+{
+	try{
+		var url = 'get_picture.cgi?&get_picture.cgi';
+	//	url+='&set_cmd='+get_pictrue.cgi;
+	//	url+='&method='+method;
+	//	url+='&index='+index;
+	//	url+=param;
+		url+='&' + new Date().getTime() + Math.random();
+		//alert(url);
+        $.ajax({
+               url: url,
+               async: true,//改为异步方式
+               type: "GET",
+               data: {},
+               success: function (result){
+			   }
+        });
+	}catch(exception){
+	return;
+	}
+
+}
+
+function delpicture()
+{
+	try{
+		var url = 'get_delpicture.cgi?&get_delpicture.cgi';
+	//	url+='&set_cmd='+get_pictrue.cgi;
+	//	url+='&method='+method;
+	//	url+='&index='+index;
+	//	url+=param;
+		url+='&' + new Date().getTime() + Math.random();
+		//alert(url);
+        $.ajax({
+               url: url,
+               async: true,//改为异步方式
+               type: "GET",
+               data: {},
+               success: function (result){
+			   }
+        });
+	}catch(exception){
+	return;
+	}
+
 }
 
 var imagefps;
@@ -2172,8 +2206,8 @@ function refreshImage(rate) {
 		blocked = false;
 	});
 	
-    image.addEventListener('error', function () {
-		image.src = './images/blackScreen.jpg';
+   	image.addEventListener('error', function () {
+	//	image.src = './images/blackScreen.jpg';
 		blocked = false;});
 	
 	imagefps = setInterval(function () {
@@ -2187,10 +2221,17 @@ function refreshImage(rate) {
 				return;
 			}
 			blocked = true;
-		//	image.src = './video/infrared.jpg?' + getTime() + '?' + Math.random();		//debug  201911
+			
+			getpicture();	//新增加
+			image.src = './video/infrared.jpg?' + getTime() + '?' + Math.random();		//debug  201911    video/infrared.jpg
+		//	delpicture();	//删除文件建立同步
 		}
-	}, rate);
+	}, 150);		//100是10帧
 }
+
+
+
+
 
 //实时显示鼠标位置温度
 var mouse_tool = {'mouseFlag':'0','coor_x':'','coor_y':'','temp':''};
@@ -2284,7 +2325,8 @@ function show_mouse_tool(val){
 }
 
 $().ready(function(e) {
-	refreshImage(40);
+//	refreshImage(40);
+	setTimeout(refreshImage(40),300000);
 	setTimeout(intervalSendCoor,3000);
 	dragElem();
 	show_mouse_temp(1);

@@ -1618,22 +1618,8 @@
                 <input class="show" id="vertical" type="checkbox" value="0" onclick="showValue('direction',this.value)" /><label class="show" for="vertical">&nbsp;&nbsp;<script>document.write(_vertical);</script></label>
             </div>
         </div>
-        <div class="iconCell iconCell4Left Slide">
-            <img id="colorPlateDiv" class="iconImg Slide" ondragstart="return false" src="./images/colorPlate.png" tppabs="http://192.168.100.2:8080/images/colorPlate.png" onclick="showPlate('colorPlate')" onmouseover="showFocus(this,'colorPlate')" onmouseout="showBlur(this,'colorPlate')"/><br/>
-            <div id="colorPlate" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;">
-                <div class=" show"></div><script>document.write(_color_plate);</script>:
-                <select id="colorSelect" class="show" style="width:80px;color:#666;right:15px;top:12px;position:absolute;" name="colorPlate" onchange="showValue('colorPlate',this.value)">
-                    <option class="show" value="0"><script>document.write(_white);</script></option>
-                    <option class="show" value="1"><script>document.write(_black);</script></option>
-                    <option class="show" value="2"><script>document.write(_iron);</script></option>
-                    <option class="show" value="3"><script>document.write(_redyellow);</script></option>
-                    <option class="show" value="4"><script>document.write(_bluered);</script></option>
-                    <option class="show" value="5"><script>document.write(_rainbow1);</script></option>
-                    <option class="show" value="6"><script>document.write(_blackred);</script></option>
-                    <option class="show" value="7"><script>document.write(_rainbow2);</script></option>
-                </select>
-            </div>
-        </div>
+        
+		
         <!-- >
         <div class="iconCell iconCell14Left" style="">
              <img id="IOValid" style="top:-4px;position:absolute;" title="报警IO设置" name="IOValid" src="./images/IOValid.png" ondragstart="return false" onclick="showPlate('IOValidDiv')" onmouseover="showFocus(this,'IOValid')" onmouseout="showBlur(this,'IOValid')"/>
@@ -1673,7 +1659,11 @@
 					<input type="number" id="autoCorrectSelect" min="1" max="10" class="show" style="width:50px;color:#666;right:5px;top:40px;position:absolute;" name="autoCorrection" />
 				</div>
 				<div class="show">
-					<button class="show" style="width:52px;color:#666;right:64px;top:70px;position:absolute;" onclick="showValue('autoCorrection',0)"><script>document.write(_submit);</script></button>
+					<script>document.write("Auto calib time(m):");</script>
+					<input type="number" id="autoCorrectSelect1" min="1" max="60" class="show" style="width:50px;color:#666;right:5px;top:65px;position:absolute;" name="autoCorrection1" />
+				</div>
+				<div class="show">
+					<button class="show" style="width:52px;color:#666;right:64px;top:90px;position:absolute;" onclick="showValue('autoCorrection',0)"><script>document.write(_submit);</script></button>
 				</div>
 			</div>
 		</div>
@@ -1712,10 +1702,29 @@
 					< -->
 				</div>
 			</div>
-		</div>		
+		</div>
+		<div class="iconCell iconCell4Left Slide" >
+            <img id="colorPlateDiv" class="iconImg Slide" ondragstart="return false" src="./images/colorPlate.png" tppabs="http://192.168.100.2:8080/images/colorPlate.png" onclick="showPlate('colorPlate')" onmouseover="showFocus(this,'colorPlate')" onmouseout="showBlur(this,'colorPlate')"/><br/>
+            <div id="colorPlate" class="downDemo show" style="left:-20px;height:30px;padding:10px 0px 0px 10px;display: inline">
+                <div class=" show"></div><script>document.write(_color_plate);</script>:
+                <select id="colorSelect" class="show" style="width:80px;color:#666;right:15px;top:12px;position:absolute;" name="colorPlate" onchange="showValue('colorPlate',this.value)">
+                    <option class="show" value="0"><script>document.write(_white);</script></option>
+                    <option class="show" value="1"><script>document.write(_black);</script></option>
+                    <option class="show" value="2"><script>document.write(_iron);</script></option>
+                    <option class="show" value="3"><script>document.write(_redyellow);</script></option>
+                    <option class="show" value="4"><script>document.write(_bluered);</script></option>
+                    <option class="show" value="5"><script>document.write(_rainbow1);</script></option>
+                    <option class="show" value="6"><script>document.write(_blackred);</script></option>
+                    <option class="show" value="7"><script>document.write(_rainbow2);</script></option>
+                </select>
+            </div>
+		</div>
+		
+
+
 	</div>
 
-		<div class="fivePanel">
+		<div class="fivePanel" style="display: none">
 			<div class="curveOption">
 				<div id="curveMeasureSet" class="curveSettings curveSetFocus" onselectstart="return false;" onclick="curvePageControl(this)">
 					<script>document.write(_measure);</script>
@@ -1818,7 +1827,7 @@
 </div>
 
 
-<div id="curveDiv" class="fiveDiv" style="display:inline;">
+<div id="curveDiv" class="fiveDiv" style="display:none;">
 	<div>
 		<!-- ><div class="curveOption" style="width:800px;"><strong>&nbsp;&nbsp;WAVEFORM:</strong>< -->
 		<canvas id="drawing" width=1010 height=200 >A drawing of something.</canvas>

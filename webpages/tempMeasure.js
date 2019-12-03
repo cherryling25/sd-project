@@ -790,13 +790,13 @@ function rangeNumConect(obj){
 
 function hidePlate(){
 	plateObj[0] = document.getElementById('tempNamePlate');
-	plateObj[1] = document.getElementById('colorPlate');
+	//plateObj[1] = document.getElementById('colorPlate');
 	plateObj[2] = document.getElementById('videomodel');
 	plateObj[3] = document.getElementById('lighting');
 	plateObj[4] = document.getElementById('distance');
 	plateObj[5] = document.getElementById('direction');
-	plateObj[6] = document.getElementById('autoCorrection');
-	plateObj[7] = document.getElementById('envirDivPlate');
+	//plateObj[6] = document.getElementById('autoCorrection');
+	//plateObj[7] = document.getElementById('envirDivPlate');
 	plateObj[8] = document.getElementById('finetuning');
 	plateObj[9] = document.getElementById('tempSection');
 	plateObj[10] = document.getElementById('analogVideo');
@@ -921,6 +921,7 @@ function initPlate(){
 		$("#vertical").val(0);
 		//自动校准
 		$("#autoCorrectSelect").val(0);
+		$("#autoCorrectSelect1").val(0);
 		$("#autoCorrectEnable").val(0);
 		//温度区域
 		$("#tempSectionSelect").val(0);
@@ -2147,8 +2148,8 @@ function sendTempCoor(){
 }
 
 function intervalSendCoor(){
-	sendTempCoor();
-	setTimeout(intervalSendCoor,500);
+	//sendTempCoor();
+	//setTimeout(intervalSendCoor,500);
 }
 
 function getpicture()
@@ -2228,8 +2229,8 @@ function refreshImage(rate) {
 			}
 			blocked = true;
 			
-			getpicture();	//新增加
-			image.src = './video/infrared.jpg?' + getTime() + '?' + Math.random();		//debug  201911    video/infrared.jpg
+			//getpicture();	//新增加
+			//image.src = './video/infrared.jpg?' + getTime() + '?' + Math.random();		//debug  201911    video/infrared.jpg
 		//	delpicture();	//删除文件建立同步
 		}
 	}, 150);		//100是10帧

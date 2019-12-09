@@ -1669,9 +1669,9 @@
 		</div>
 		<div class="iconCell iconCell7Left">
 		<img id="bcgCorrction" name="bcgCorrction" ondragstart="return false"  onclick="showPlate('envirDivPlate')" src="./images/optionParamet.png" tppabs="http://192.168.100.2:8080/images/optionParamet.png" onmouseover="showFocus(this,'optionParamet')" onmouseout="showBlur(this,'optionParamet')"/>
-		<div class="envirParam envirPlate show" id="envirDivPlate" style="width:400px;display:inline">
+		<div class="envirParam envirPlate show" id="envirDivPlate" style="display:inline">
 				<div class="nav2 show" style="left:35px;"></div>
-				<div class="envirScoreDiv show" style="width:385px;">
+				<div class="envirScoreDiv show">
 					<script>document.write(_globalparams);</script>
 					<div class="envirButton show" id="envirButtonPlate" onclick="showValue('envirDivPlate',0)"><font class="envirFont show"><script>document.write(_submit);</script></font></div>
 				</div>
@@ -1690,7 +1690,7 @@
 				<div class="envirDiv show">
 					<script>document.write(_distance);</script><span id="envirDisPlateText">0</span> <input class="envirRight show" id="envirDisPlate" type="range" max="100" min="-100" step="1" oninput="envirReflectPlateChange('envirDisPlate','envirDisPlateText')"/>
 				</div>
-				<div class='envirSubDiv show'>
+				<div class='envirSubDiv show' style="display: none;">
 					<div class="envirDiv envirExternal show"><script>document.write(_infraredWindow);</script></div>
 					<div class="envirDiv envirExternal show">
 						<script>document.write(_infraredTemp);</script><input class="envirSubright show" id="envirInfTemPlate" type="number" />
@@ -1723,7 +1723,27 @@
 
 
 	</div>
-
+	<div class="warningOutput">
+		
+			<!-- <h4>warning output</h4>
+		<table cellpadding="10">
+			<tr>
+				<th>FTP</th>
+				<td>output&nbsp;</td>
+				<td>output&nbsp;</td>
+			</tr>
+			<tr>
+				<th>EMAIL</th>
+				<td>output&nbsp;</td>
+				<td>output&nbsp;</td>
+			</tr>
+			<tr>
+				<th>GPIO</th>
+				<td>output&nbsp;</td>
+				<td>output&nbsp;</td>
+			</tr>
+		</table> -->
+	</div>
 		<div class="fivePanel" style="display: none">
 			<div class="curveOption">
 				<div id="curveMeasureSet" class="curveSettings curveSetFocus" onselectstart="return false;" onclick="curvePageControl(this)">

@@ -5194,3 +5194,11 @@ function body_onload()
 	//初始化环境参数
 	initEnvirParams();
 }
+$(function(){ 
+	
+		$(".tableOne td").click(function(){ 
+			//$("td").css("background-color","");
+			$(this).css("background-color","pink"); 
+		}); 
+});   
+

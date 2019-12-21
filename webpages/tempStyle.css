@@ -237,7 +237,7 @@
 	left:290px;
 }
 .iconCell7Left{
-	left:493px;
+	left:550px;
 }
 .iconCell8Left{
 	left:560px;
@@ -1104,19 +1104,53 @@ input[type=range]::-webkit-slider-thumb {
 	position:absolute;
 }
 .warningOutput{
-	top:220px;
+	font-family: "Microsoft YaHei";
+	font-size: 14px;
+	
+	top:200px;
 	left:0px;
 	width:480px;
 	height:160px;
 	padding:10px 0px 0px 0px;
 	position:absolute;
-	border: 1px solid red;
+	border: 0px solid red;
 }
-th{
-	border: 1px solid green;
+.warningOutput h4{
+	color: #666;
+	display: inline-block;
+	left:155px;
+	position: relative;
+}
+.warningOutput .btnOne{
+	color: #666;
+	left:322px;
+	top: 60px;
+	position: relative;
+	border: 1px solid #666;
+	padding: 0px 7px;
+	border-radius: 4px;
+}
+.warningOutput .btnTwo{
+	color: #666;
+	left:200px;
+	top: 22px;
+	position: relative;
+	border: 1px solid #666;
+	padding: 0px 7px;
+	border-radius: 4px;
+}
+.tableOne{
+	top:7px;
+	position: relative;
+}
+.tableTwo{
+	top:19px;
+	position: relative;
 }
 td{
-	border: 1px solid black;
+	cursor: pointer;
+	border: 1px solid rgb(105, 104, 104);
+	width: 100px;
 }
 .textType{
 	-web-kit-appearance:none;
